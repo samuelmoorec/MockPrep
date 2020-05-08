@@ -1,7 +1,7 @@
 package com.codeup.mockprep.Models;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -24,6 +24,7 @@ public class User {
     @Column
     private String last_name;
 
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<> images;
 
 }

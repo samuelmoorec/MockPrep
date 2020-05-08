@@ -26,7 +26,7 @@ public class Question {
     private String solution;
 
     @Column
-    private String gif_url;
+    private String video_url;
 
     @Column
     private String resource;
@@ -39,7 +39,7 @@ public class Question {
         this.level = level;
         this.question = question;
         this.solution = solution;
-        this.gif_url = gif_url;
+        this.video_url = gif_url;
         this.resource = resource;
     }
 
@@ -91,12 +91,12 @@ public class Question {
         this.solution = solution;
     }
 
-    public String getGif_url() {
-        return gif_url;
+    public String getVideo_url() {
+        return video_url;
     }
 
-    public void setGif_url(String gif_url) {
-        this.gif_url = gif_url;
+    public void setVideo_url(String video_url) {
+        this.video_url = video_url;
     }
 
     public String getResource() {
