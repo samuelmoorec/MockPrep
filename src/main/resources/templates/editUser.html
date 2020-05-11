@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Questions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper light-green darken-2">
+            <a href="#" class="brand-logo center">MockPrep</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/Questions">Questions</a></li>
+                <li  class="active" ><a href="/Question/Create">Create</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<header>
+    <h1 class="center">Update Account</h1>
+
+    <p class="center">Please fill in fields you wish to change and confirm your password to confirm changes.</p>
+</header>
+
+<div class="container">
+
+    <form th:action="@{/user/update}" method="post">
+
+        <div class="input-field col s6">
+        <label for="first_name">First Name</label>
+        <input id="first_name" value=" "  name="first_name" type="text">
+        </div>
+
+        <div class="input-field col s6">
+        <label for="last_name">Last Name</label>
+        <input id="last_name" value=" " name="last_name" type="text">
+        </div>
+
+        <div class="input-field col s6">
+        <label for="email">Email</label>
+        <input id="email" value="example@mail.com " name="email" type="email">
+        </div>
+
+        <div class="input-field col s6">
+        <label for="password">Current Password</label>
+        <input name="password" id="password" type="password">
+        </div>
+
+        <input class="btn right light-green darken-2" style="margin-top: 10px" type="submit">
+    </form>
+
+
+
+</div>
+
+<script>
+
+
+        let request = $.ajax({'url': '/currentUser.json'});
+        request.done(function (users) {
+           let currentUser = users[0];
+
+           $('#first_name').val(currentUser.first_name);
+           $('#last_name').val(currentUser.last_name);
+           $('#email').val(currentUser.email)
+        });
+
+    M.AutoInit();
+
+</script>
+
+</body>
+</html>
