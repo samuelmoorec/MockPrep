@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Activities")
@@ -22,22 +24,23 @@ public class Activity {
     @OneToOne
     private Question question;
 
+    @Column
     private long timeInSec;
 
+    @Column
     private String type;
 
-    private Date date;
+    @Column
+    private Timestamp timestamp;
 
-    Activity(){}
+    public Activity(){}
 
-    public Activity(long id, User user, Question question, long timeInSec, String type, Date date) {
-        this.id = id;
+    public Activity(User user, String type,Timestamp timestamp) {
         this.user = user;
-        this.question = question;
-        this.timeInSec = timeInSec;
         this.type = type;
-        this.date = date;
+        this.timestamp = timestamp;
     }
+
 
     public long getId() {
         return id;
@@ -79,11 +82,11 @@ public class Activity {
         this.type = type;
     }
 
-    public Date getDate() {
-        return date;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 }

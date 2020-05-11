@@ -58,5 +58,10 @@ public class QuestionController {
             questionDao.save(newQuestion);
         return "questions";
     }
+
+    @PostMapping("/SelectQuestion")
+    public String submitquestionActivity(){
+        @RequestParam
+    }
 }
 

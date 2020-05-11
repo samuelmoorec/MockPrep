@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Questions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper light-green darken-2">
+            <a href="#" class="brand-logo center">MockPrep</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/Questions">Questions</a></li>
+                <li  class="active" ><a href="/Question/Create">Create</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<header>
+    <h1 class="center">Create an Account</h1>
+</header>
+
+<div class="container">
+
+    <form th:action="@{/user/create}" method="post">
+
+        <div class="input-field col s6">
+        <label for="first_name">First Name</label>
+        <input id="first_name"  name="first_name" type="text">
+        </div>
+
+        <div class="input-field col s6">
+        <label for="last_name">Last Name</label>
+        <input id="last_name"  name="last_name" type="text">
+        </div>
+
+        <div class="input-field col s6">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email">
+        </div>
+
+        <div class="input-field col s6">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text">
+        </div>
+
+        <div class="input-field col s6">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password">
+        </div>
+
+        <div class="switch left">
+            <br/>
+            <label>
+                <input id="admin" name="admin" value=false type="checkbox">
+                <span class="lever"></span>
+                Staff
+            </label>
+        </div>
+
+        <input class="btn right light-green darken-2" style="margin-top: 10px" type="submit">
+    </form>
+
+
+
+</div>
+
+<script>
+    M.AutoInit();
+
+</script>
+
+</body>
+</html>
