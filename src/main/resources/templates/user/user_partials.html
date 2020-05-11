@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <!-- include stylesheets, etc here -->
+</head>
+<body>
+
+    <th:block th:fragment="user_navbar">
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper light-green darken-2">
+                    <a href="#" class="brand-logo center">MockPrep</a>
+                    <ul id="nav-mobile" class="left hide-on-med-and-down">
+                        <li><a href="/home">Home</a></li>
+                        <li class="active"><a href="/Questions">Questions</a></li>
+                    </ul>
+                    <ul class="right hide-on-med-and-down">
+                        <li class="logout">
+                            <form class="right" th:action="@{/logout}" th:method="post">
+                                <button class="hover white-text waves-effect waves-light btn-flat">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+        </div>
+    </th:block>
+
+
+    <th:block th:fragment="user_navbar_questions">
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper light-green darken-2">
+                    <a href="#" class="brand-logo center">MockPrep</a>
+                    <ul id="nav-mobile" class="left hide-on-med-and-down">
+                        <li><a href="/home">Home</a></li>
+                        <li class="active"><a href="/Questions">Questions</a></li>
+                    </ul>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a class="modal-trigger" href="#optionsmodal">Filter</a></li>
+                        <li class="logout">
+                            <form class="right" th:action="@{/logout}" th:method="post">
+                                <button class="hover white-text waves-effect waves-light btn-flat">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+        </div>
+    </th:block>
+
+
+</body>
+</html>
