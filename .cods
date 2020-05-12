@@ -1,2 +1,2 @@
-BUILD_COMMAND='./mvnew package'
+BUILD_COMMAND='./mvnw package'
 JAR_FILE=target/mockprep-0.0.1-SNAPSHOT.jar
