@@ -9,27 +9,18 @@
 </head>
 <body>
 
-<div class="navbar-fixed">
-    <nav>
-        <div class="nav-wrapper light-green darken-2">
-            <a href="#" class="brand-logo center">MockPrep</a>
-            <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li><a href="/home">Home</a></li>
-                <li><a href="/Questions">Questions</a></li>
-                <li  class="active" ><a href="/Question/Create">Create</a></li>
-            </ul>
-        </div>
-    </nav>
-</div>
+<th:block th:replace="anonymousUser/anonymous_partials :: anonymousUser_navbar">
+
+</th:block>
 
 <header>
     <h1 class="center">Login</h1>
-    <div th:if="${param.error}">
-        Invalid Username and Password.
+    <div class="center red-text" th:if="${param.error}">
+        Invalid Username or Password.
     </div>
-    <div th:if="${param.logout}">
+    <div class="center red-green" th:if="${param.logout}">
         You have been logged out.
-    </div>w
+    </div>
 </header>
 
 <div class="container">

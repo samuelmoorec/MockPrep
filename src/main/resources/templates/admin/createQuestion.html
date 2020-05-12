@@ -9,18 +9,9 @@
 </head>
 <body>
 
-<div class="navbar-fixed">
-    <nav>
-        <div class="nav-wrapper light-green darken-2">
-            <a href="#" class="brand-logo center">MockPrep</a>
-            <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li><a href="/home">Home</a></li>
-                <li><a href="/Questions">Questions</a></li>
-                <li  class="active" ><a href="/Question/Create">Create</a></li>
-            </ul>
-        </div>
-    </nav>
-</div>
+<th:block th:replace="admin/admin_partials :: admin_navbar">
+
+</th:block>
 
     <header>
         <h1 class="center">Create a question</h1>
@@ -28,7 +19,7 @@
 
     <div class="container">
 
-    <form action="/Question/Create" method="post">
+    <form th:action="@{/CreateQuestion}" method="post">
         <label for="subject">Subject</label>
         <input id="subject"  name="subject" placeholder="Array Manipulation" type="text">
 
@@ -38,16 +29,16 @@
         <label for="level">Level</label>
         <input id="level" name="level" placeholder="2" type="number">
 
-        <label for="question">Question</label>
-        <input id="question" name="question" placeholder="How would you remove an element of an array?" type="text">
+        <label for="question">Question HTML Format</label>
+        <input id="question" name="question" placeholder="<p> How would you remove an element of an array? </p>" type="text">
 
-        <label for="solution">Solution</label>
-        <input id="solution" name="solution" placeholder="We could use POP, SPLICE, or SHIFT" type="text">
+        <label for="solution">Solution HTML Format</label>
+        <input id="solution" name="solution" placeholder="<p> We could use POP, SPLICE, or SHIFT </p>" type="text">
 
         <label for="resource">Resource</label>
         <input id="resource" name="resource" placeholder="https://java.codeup.com/javascript-i/arrays/manipulating/" type="url">
 
-            <label for="solution_video">Solution Video ID <a class="modal-trigger" data-target="modal1"  href="#modal1">What is this?</a></label>
+            <label for="solution_video">Solution Video ID<a class="modal-trigger" data-target="modal1"  href="#modal1">What is this?</a></label>
             <input id="solution_video" name="solution_video" placeholder="oigfaZ5ApsM" type="text">
 
         <div id="modal1" class="modal">
@@ -55,7 +46,7 @@
                 <h2>YouTube Video ID</h2>
                 <p>The YouTube video ID is the series of characters that follows "v=" as shown in the image below.</p>
                 <br/>
-                <img class="responsive-img" th:src="@{/Images/Video_ID_help.png}" alt="VideoIDImage">
+                <img class="responsive-img" th:src="@{/static/Images/Video_ID_help.png}" alt="VideoIDImage">
             </div>
             <div class="modal-footer">
                 <a href="#!" class="modal-close waves-effect waves-green btn-flat">Okay</a>

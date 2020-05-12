@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <!-- include stylesheets, etc here -->
+</head>
+<body>
+
+<th:block th:fragment="anonymousUser_navbar">
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper light-green darken-2">
+                <a href="#" class="brand-logo center">MockPrep</a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/signup">SignUp</a></li>
+                </ul>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="/login">Login</a></li>
+
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+</th:block>
+
+</body>
+</html>

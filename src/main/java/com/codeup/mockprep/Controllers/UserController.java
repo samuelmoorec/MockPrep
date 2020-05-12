@@ -36,11 +36,25 @@ public class UserController{
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDao.findAllById(loggedInUser.getId());}
 
-    @GetMapping("/user/create")
+    @GetMapping("/signup")
     public String SignUpForm(){
-        return "createUser";
+        if ( SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
+            return "anonymousUser/createUser";
+        }else{
+            return "redirect:/Questions";
+        }
     }
 
+    @GetMapping("/SuperdupperlikereallySecretAdminmakerthingy")
+    public String makeAdmin(){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userInDB = userDao.findByUsername(loggedInUser.getUsername());
+        if (userInDB.getEmail().contains("@codeup.com")) {
+            userInDB.setAdmin(true);
+            userDao.save(userInDB);
+        }
+        return "redirect:/Questions";
+    }
 
     @GetMapping("/login/redirect")
     public String LoginRedirect(){
@@ -55,7 +69,7 @@ public class UserController{
     }
 
 
-    @PostMapping("/user/create")
+    @PostMapping("/signup")
     public String CreateUser(
             @RequestParam(name = "first_name") String first_name,
             @RequestParam(name = "last_name") String last_name,
@@ -77,7 +91,7 @@ public class UserController{
     }
 
 
-    @GetMapping("/user/update")
+    @GetMapping("/updateAccount")
     public String UpdateUserForm(){
         return "editUser";
     }
@@ -95,7 +109,7 @@ public class UserController{
         updatedUser.setLast_name(last_name);
         updatedUser.setEmail(email);
         userDao.save(updatedUser);
-        return "questions";
+        return "redirect:/Questions";
     }
 
 }

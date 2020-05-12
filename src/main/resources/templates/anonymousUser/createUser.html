@@ -9,18 +9,9 @@
 </head>
 <body>
 
-<div class="navbar-fixed">
-    <nav>
-        <div class="nav-wrapper light-green darken-2">
-            <a href="#" class="brand-logo center">MockPrep</a>
-            <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li><a href="/home">Home</a></li>
-                <li><a href="/Questions">Questions</a></li>
-                <li  class="active" ><a href="/Question/Create">Create</a></li>
-            </ul>
-        </div>
-    </nav>
-</div>
+<th:block th:replace="anonymousUser/anonymous_partials :: anonymousUser_navbar">
+
+</th:block>
 
 <header>
     <h1 class="center">Create an Account</h1>
@@ -28,7 +19,7 @@
 
 <div class="container">
 
-    <form th:action="@{/user/create}" method="post">
+    <form th:action="@{/signup}" method="post">
 
         <div class="input-field col s6">
         <label for="first_name">First Name</label>
