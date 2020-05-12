@@ -15,6 +15,11 @@ public class IndexController {
         this.userDao = userDao;
     }
 
+    @GetMapping("/")
+    public String homeRedirect(){
+        return "redirect:/home";
+    }
+
     @GetMapping("/home")
     public String home(){
         if ( SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {

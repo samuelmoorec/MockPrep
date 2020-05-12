@@ -45,16 +45,6 @@ public class UserController{
         }
     }
 
-    @GetMapping("/SuperdupperlikereallySecretAdminmakerthingy")
-    public String makeAdmin(){
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userInDB = userDao.findByUsername(loggedInUser.getUsername());
-        if (userInDB.getEmail().contains("@codeup.com")) {
-            userInDB.setAdmin(true);
-            userDao.save(userInDB);
-        }
-        return "redirect:/Questions";
-    }
 
     @GetMapping("/login/redirect")
     public String LoginRedirect(){
@@ -75,12 +65,11 @@ public class UserController{
             @RequestParam(name = "last_name") String last_name,
             @RequestParam(name = "email") String email,
             @RequestParam(name = "username") String username,
-            @RequestParam(name = "admin", defaultValue = "false") boolean isAdmin,
             @RequestParam(name = "password") String password
     ){
         System.out.println(password);
         String hashedPassword = passwordEncoder.encode(password);
-        User newUser = new User(username,email,first_name,last_name,hashedPassword,isAdmin);
+        User newUser = new User(username,email,first_name,last_name,hashedPassword,false);
         userDao.save(newUser);
         User userInDB = userDao.findByUsername(username);
         Long dateInMilliSecs = new java.util.Date().getTime();

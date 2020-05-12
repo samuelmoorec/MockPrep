@@ -13,12 +13,17 @@
 
 </th:block>
 
+
 <header>
     <h1 class="center">Login</h1>
+
+    <div class="center">
+        Dont have an Account? <a class="green-text" th:href="@{/signup}">SignUp</a>
+    </div>
     <div class="center red-text" th:if="${param.error}">
         Invalid Username or Password.
     </div>
-    <div class="center red-green" th:if="${param.logout}">
+    <div class="center green-text" th:if="${param.logout}">
         You have been logged out.
     </div>
 </header>
@@ -40,6 +45,7 @@
 
         <input class="btn right light-green darken-2" id="submit_button" style="margin-top: 10px" type="submit">
     </form>
+
 
 
 

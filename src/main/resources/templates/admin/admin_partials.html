@@ -16,7 +16,7 @@
                 <ul id="nav-mobile" class="left hide-on-med-and-down">
                     <li><a href="/home">Home</a></li>
                     <li class="active"><a href="/Questions">Questions</a></li>
-                    <li><a href="/Question/Create">Create</a></li>
+                    <li><a  href="/CreateQuestion">Create</a></li>
                     <li><a href="/admin">Admin</a></li>
                 </ul>
                 <ul class="right hide-on-med-and-down">
@@ -32,6 +32,77 @@
     </div>
 </th:block>
 
+<th:block th:fragment="admin_navbar_adminview">
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper light-green darken-2">
+                <a href="#" class="brand-logo center">MockPrep</a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/Questions">Questions</a></li>
+                    <li><a  href="/CreateQuestion">Create</a></li>
+                    <li class="active" ><a href="/admin">Admin</a></li>
+                </ul>
+                <ul class="right hide-on-med-and-down">
+                    <li class="logout">
+                        <form class="right" th:action="@{/logout}" th:method="post">
+                            <button class="hover white-text waves-effect waves-light btn-flat">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+</th:block>
+
+<th:block th:fragment="admin_navbar_create">
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper light-green darken-2">
+                <a href="#" class="brand-logo center">MockPrep</a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/Questions">Questions</a></li>
+                    <li class="active" ><a href="/CreateQuestion">Create</a></li>
+                    <li><a href="/admin">Admin</a></li>
+                </ul>
+                <ul class="right hide-on-med-and-down">
+                    <li class="logout">
+                        <form class="right" th:action="@{/logout}" th:method="post">
+                            <button class="hover white-text waves-effect waves-light btn-flat">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+</th:block>
+
+<th:block th:fragment="admin_navbar_home">
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper light-green darken-2">
+                <a href="#" class="brand-logo center">MockPrep</a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li class="active" ><a href="/home">Home</a></li>
+                    <li><a href="/Questions">Questions</a></li>
+                    <li><a href="/CreateQuestion">Create</a></li>
+                    <li><a href="/admin">Admin</a></li>
+                </ul>
+                <ul class="right hide-on-med-and-down">
+                    <li class="logout">
+                        <form class="right" th:action="@{/logout}" th:method="post">
+                            <button class="hover white-text waves-effect waves-light btn-flat">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+</th:block>
 
 <th:block th:fragment="admin_navbar_questions">
     <div class="navbar-fixed">
