@@ -33,6 +33,8 @@ public class Activity {
     @Column
     private Timestamp timestamp;
 
+//    hello
+
     public Activity(){}
 
     public Activity(User user, String type,Timestamp timestamp) {
