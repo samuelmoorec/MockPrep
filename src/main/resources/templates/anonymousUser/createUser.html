@@ -15,6 +15,9 @@
 
 <header>
     <h1 class="center">Create an Account</h1>
+    <div class="center">
+        Already have an Account? <a class="green-text" th:href="@{/login}">Login</a>
+    </div>
 </header>
 
 <div class="container">
@@ -45,15 +48,7 @@
         <label for="password">Password</label>
         <input id="password" name="password" type="password">
         </div>
-
-        <div class="switch left">
-            <br/>
-            <label>
-                <input id="admin" name="admin" value=false type="checkbox">
-                <span class="lever"></span>
-                Staff
-            </label>
-        </div>
+w
 
         <input class="btn right light-green darken-2" style="margin-top: 10px" type="submit">
     </form>
