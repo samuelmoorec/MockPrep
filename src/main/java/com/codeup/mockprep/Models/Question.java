@@ -19,10 +19,10 @@ public class Question {
     @Column
     private Long level;
 
-    @Column
+    @Column(columnDefinition="TEXT")
     private String question;
 
-    @Column
+    @Column(columnDefinition="TEXT")
     private String solution;
 
     @Column
