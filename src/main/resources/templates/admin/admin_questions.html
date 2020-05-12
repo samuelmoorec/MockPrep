@@ -148,7 +148,7 @@
 
 
                         let question_id = parseInt($(this).attr("data-id"));
-                        let youtube_video = `<div class="video-container"><iframe width="50%" height="300px" src="https://www.youtube.com/embed/${QuestionObject[question_id].gif_url}" frameborder="0" allowfullscreen></iframe></div>`;
+                        let youtube_video = `<div class="video-container"><iframe width="50%" height="300px" src="https://www.youtube.com/embed/${QuestionObject[question_id].video_url}" frameborder="0" allowfullscreen></iframe></div>`;
                         let question = `<br/><h4>${QuestionObject[question_id].title}</h4><p>${QuestionObject[question_id].question}</p>`;
                         let answer = `<br/><h4>${QuestionObject[question_id].title}</h4><p>${QuestionObject[question_id].solution}</p>`
 
