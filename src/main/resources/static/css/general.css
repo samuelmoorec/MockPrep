@@ -22,3 +22,12 @@
 .signup_input{
     margin-top: 10px
 }
+
+.modal{
+    max-height: 80%;
+}
+
+.card .card-content{
+    overflow-y: hidden;
+    height: 200px;
+}
