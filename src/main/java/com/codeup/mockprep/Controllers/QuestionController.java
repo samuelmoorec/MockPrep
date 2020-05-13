@@ -67,6 +67,7 @@ public class QuestionController {
             ){
             Question newQuestion = new Question(subject,language,level,question,solution,solution_video,resource);
             questionDao.save(newQuestion);
+        System.out.println(newQuestion.getSolution());
         return "redirect:/Questions";
     }
 

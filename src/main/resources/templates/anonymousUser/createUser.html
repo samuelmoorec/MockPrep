@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Questions</title>
+    <title>SignUp</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -26,7 +26,7 @@
 
         <div class="input-field col s6">
         <label for="first_name">First Name</label>
-        <input id="first_name"  name="first_name" type="text">
+        <input required id="first_name"  name="first_name" type="text">
         </div>
 
         <div class="input-field col s6">
@@ -36,24 +36,21 @@
 
         <div class="input-field col s6">
         <label for="email">Email</label>
-        <input id="email" name="email" type="email">
+        <input required id="email" name="email" type="email">
         </div>
 
         <div class="input-field col s6">
         <label for="username">Username</label>
-        <input id="username" name="username" type="text">
+        <input required id="username" name="username" type="text">
         </div>
 
         <div class="input-field col s6">
         <label for="password">Password</label>
-        <input id="password" name="password" type="password">
+        <input required id="password" name="password" type="password">
         </div>
-w
 
-        <input class="btn right light-green darken-2" style="margin-top: 10px" type="submit">
+        <input class="btn right light-green darken-2 signup_input" type="submit">
     </form>
-
-
 
 </div>
 

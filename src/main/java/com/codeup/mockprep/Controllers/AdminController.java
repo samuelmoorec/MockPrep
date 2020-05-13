@@ -46,6 +46,7 @@ public class AdminController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = userDao.findByUsername(loggedInUser.getUsername());
         if (currentUser.isAdmin()){
+
             return "admin/admin_viewActivity";
         }else{
             return "redirect:/Questions";
