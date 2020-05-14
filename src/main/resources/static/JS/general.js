@@ -53,7 +53,9 @@ populateQuestions = () => {
 
         $('#question_feed').html(html);
 
-            createQuestion(Questions);
+        M.AutoInit();
+
+        QuestionProcedure(Questions);
 
 
 
@@ -62,19 +64,44 @@ populateQuestions = () => {
 
 
 
-    M.AutoInit();
+
 
 }
 
-createQuestion = (Questions) => {
+QuestionProcedure = (Questions) => {
+
+    console.log("waiting to click")
+
+    $(document).on("click",'.question-selector',function () {
+
+        console.log("I was clicked")
+
+        let question_id = parseInt($(this).attr("data-id"));
+
+
+
+        createQuestion(Questions, question_id);
+
+
+        let currentQuestion = Questions[question_id];
+
+        selectedQuestion(currentQuestion.id);
+
+        console.log("helloBBBBB");
+
+    });
+
+}
+
+
+
+createQuestion = (Questions,ID) => {
     console.log(1)
 
 
-    $('.question-selector').click(function () {
-
     console.log(2)
 
-        let question_id = parseInt($(this).attr("data-id"));
+        let question_id = ID
 
         let currentQuestion = Questions[question_id];
 
@@ -109,25 +136,14 @@ createQuestion = (Questions) => {
 
         console.log(3)
 
-        M.AutoInit();
 
         $('#question_modal').addClass("no-autoinit");
 
-        createQuestion(Questions);
 
         console.log(4)
-        $('.question-selector').click(function () {
 
 
-            selectedQuestion(currentQuestion.id);
-
-            console.log(5)
-        });
-        console.log(6)
-
-
-
-    })
+    M.AutoInit();
 
 
 }
