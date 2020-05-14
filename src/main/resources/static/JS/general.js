@@ -112,6 +112,8 @@ createQuestion = (Questions) => {
 
         createQuestion(Questions);
 
+
+
     })
 
 
@@ -136,4 +138,31 @@ generateModalFooter = (questionID,QuestionObjectSize) => {
     }
 
     return footerHTML;
+}
+
+makingRequest = () => {
+    let question_id = 4;
+    let timeInSecs = 345;
+
+    let data = {}
+    data["question_id"] = 5;
+    data["timeInSecs"] = 345;
+
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/addsomedata",
+        data: JSON.stringify(data),
+        dataType: 'json',
+        timeout: 600000,
+        success: function (data) {
+            $("#btn-update").prop("disabled", false);
+            //...
+        },
+        error: function (e) {
+            $("#btn-save").prop("disabled", false);
+            //...
+        }
+    });
 }
