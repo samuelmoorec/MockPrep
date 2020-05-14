@@ -67,11 +67,12 @@ populateQuestions = () => {
 }
 
 createQuestion = (Questions) => {
+    console.log(1)
 
 
     $('.question-selector').click(function () {
 
-
+    console.log(2)
 
         let question_id = parseInt($(this).attr("data-id"));
 
@@ -106,11 +107,23 @@ createQuestion = (Questions) => {
 
         $('#question_modal').html(tabs);
 
+        console.log(3)
+
         M.AutoInit();
 
         $('#question_modal').addClass("no-autoinit");
 
         createQuestion(Questions);
+
+        console.log(4)
+        $('.question-selector').click(function () {
+
+
+            selectedQuestion(currentQuestion.id);
+
+            console.log(5)
+        });
+        console.log(6)
 
 
 
@@ -140,19 +153,19 @@ generateModalFooter = (questionID,QuestionObjectSize) => {
     return footerHTML;
 }
 
-makingRequest = () => {
-    let question_id = 4;
-    let timeInSecs = 345;
+selectedQuestion = (ID) => {
+
+
 
     let data = {}
-    data["question_id"] = 5;
-    data["timeInSecs"] = 345;
+    data["question_id"] = ID;
+
 
 
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/addsomedata",
+        url: "/questionSelection",
         data: JSON.stringify(data),
         dataType: 'json',
         timeout: 600000,
