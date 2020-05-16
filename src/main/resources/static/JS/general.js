@@ -195,3 +195,12 @@ selectedQuestion = (ID) => {
         }
     });
 }
+
+generatePreHTML = (HTML) => {
+    return HTML.replace(/</g ,"&lt").replace(/>/g ,"&gt");
+}
+
+let html = `<p>hello there my bb</p>`
+
+
+console.log(generatePreHTML(html));
