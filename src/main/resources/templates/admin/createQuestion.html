@@ -11,6 +11,16 @@
 
 </th:block>
 
+    <div id="questionPreview" class="modal noScrollBar">
+        <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+    </div>
+
     <header>
         <h1 class="center">Create a question</h1>
     </header>
@@ -22,16 +32,20 @@
         <input id="subject"  name="subject" placeholder="Array Manipulation" type="text">
 
         <label for="language">Language</label>
-        <input id="language"  name="language" placeholder="JavaScript" type="text">
+        <input id="language"  name="language" placeholder="JavaScript" type="text" class="autocomplete">
 
         <label for="level">Level</label>
         <input id="level" name="level" placeholder="2" type="number">
 
         <label for="question">Question HTML Format</label>
-        <textarea wrap="physical" style="white-space: pre-wrap;" class="materialize-textarea"  id="question" name="question" placeholder="<p> How would you remove an element of an array? </p>" type="text"></textarea>
+        <textarea style="white-space: pre-wrap;" class="materialize-textarea"  id="question" name="question" placeholder="<p> How would you remove an element of an array? </p>" type="text"></textarea>
+
+        <input type="hidden" style="white-space: pre-wrap;" id="questionFormatted" name="questionFormatted">
 
         <label  for="solution">Solution HTML Format</label>
-        <textarea wrap="physical" style="white-space: pre-wrap;" class="materialize-textarea"  id="solution" name="solution" placeholder="<p> We could use POP, SPLICE, or SHIFT </p>"></textarea>
+        <textarea style="white-space: pre-wrap;" class="materialize-textarea"  id="solution" name="solution" placeholder="<p> We could use POP, SPLICE, or SHIFT </p>"></textarea>
+
+        <input type="hidden" style="white-space: pre-wrap;" id="solutionFormatted" name="solutionFormatted">
 
         <label for="resource">Resource</label>
         <input  id="resource" name="resource" placeholder="https://java.codeup.com/javascript-i/arrays/manipulating/" type="url">
@@ -51,8 +65,7 @@
             </div>
         </div>
 
-
-
+        <a class="modal-trigger btn left light-green darken-2 signup_input" id="previewmodal" href="#questionPreview">Preview</a>
 
         <input class="btn right light-green darken-2 signup_input" type="submit">
     </form>
@@ -63,7 +76,7 @@
 
     <script>
         M.AutoInit();
-
+        PreHTMLGeneration();
     </script>
 
 </body>
