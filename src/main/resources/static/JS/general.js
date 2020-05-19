@@ -262,7 +262,6 @@ PreviewModal = () => {
 
     $('#questionPreview').html(tabs);
 
-    $('#questionPreview').addClass("no-autoinit");
 
 }
 
