@@ -202,24 +202,36 @@ generatePreHTML = (HTML) => {
 
 
 PreHTMLGeneration = () => {
+    console.log("Generating Pre HTML")
 
     $(document).on('change', '#question', function() {
+        console.log("event change");
         let question = $(this).val()
-        question = generatePreHTML(question);
+        console.log($('#questionFormatType').val());
+        if($('#questionFormatType').is(":checked")){
+            question = generatePreHTML(question);
+        }
         $('#questionFormatted').val(question)
 
     });
 
     $(document).on('change', '#solution', function() {
         let solution = $(this).val()
-        solution = generatePreHTML(solution);
+        if($('#solutionFormatType').is(":checked")){
+            solution = generatePreHTML(solution);
+        }
         $('#solutionFormatted').val(solution)
     });
 
+
+
+}
+
+generatePreviewModal = () => {
+    console.log("Generating Preview Modal")
     $(document).on('click','#previewmodal', function () {
         PreviewModal();
     });
-
 }
 
 PreviewModal = () => {
@@ -252,7 +264,5 @@ PreviewModal = () => {
 
     $('#questionPreview').addClass("no-autoinit");
 
-
-    M.AutoInit();
 }
 

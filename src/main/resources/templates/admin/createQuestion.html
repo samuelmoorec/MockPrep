@@ -38,11 +38,27 @@
         <input id="level" name="level" placeholder="2" type="number">
 
         <label for="question">Question HTML Format</label>
+        <div class="switch">
+            <label>
+                HTML
+                <input type="checkbox" id="questionFormatType">
+                <span class="lever"></span>
+                Display Code
+            </label>
+        </div>
         <textarea style="white-space: pre-wrap;" class="materialize-textarea"  id="question" name="question" placeholder="<p> How would you remove an element of an array? </p>" type="text"></textarea>
 
         <input type="hidden" style="white-space: pre-wrap;" id="questionFormatted" name="questionFormatted">
 
         <label  for="solution">Solution HTML Format</label>
+        <div class="switch">
+            <label>
+                HTML
+                <input type="checkbox" id="solutionFormatType">
+                <span class="lever"></span>
+                Display Code
+            </label>
+        </div>
         <textarea style="white-space: pre-wrap;" class="materialize-textarea"  id="solution" name="solution" placeholder="<p> We could use POP, SPLICE, or SHIFT </p>"></textarea>
 
         <input type="hidden" style="white-space: pre-wrap;" id="solutionFormatted" name="solutionFormatted">
@@ -75,8 +91,9 @@
     </div>
 
     <script>
-        M.AutoInit();
         PreHTMLGeneration();
+        generatePreviewModal();
+        M.AutoInit();
     </script>
 
 </body>
