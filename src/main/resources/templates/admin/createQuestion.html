@@ -5,19 +5,29 @@
     <title>Questions</title>
     <th:block th:replace="admin/admin_partials :: links_and_scripts" ></th:block>
 </head>
-<body>
+<body class="overflow">
 
 <th:block th:replace="admin/admin_partials :: admin_navbar_create">
 
 </th:block>
 
     <div id="questionPreview" class="modal noScrollBar">
-        <div class="modal-content">
-            <h4>Modal Header</h4>
-            <p>A bunch of text</p>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+        <div class="modal-content noScrollBar" style="height: auto">
+            <h5 class="center">Preview</h5>
+            <div class="row">
+                <div class="col s12 ">
+                    <ul class="tabs">
+                        <li class="tab col s4"><a href="#test1" class="light-green-text text-darken-1 active">Question</a></li>
+                        <li class="tab col s4"><a href="#test2" class="light-green-text text-darken-1">Answer</a></li>
+                        <li class="tab col s4"><a href="#test4" class="light-green-text text-darken-1">Video</a></li>
+                        <li class="indicator" style="left: 0px; right: 450px;"></li></ul>
+                </div>
+                <div id="test1" class="col s12 active" style="display: block;"><br><pre>Question</pre></div>
+                <div id="test2" class="col s12" style="display: none;"><br><pre>Solution</pre></div>
+                <div id="test4" class="col s12" style="display: none;"><div class="video-container">
+                    <iframe width="50%" height="300px" src="https://www.youtube.com/embed/xjW-isgOijs" frameborder="0" allowfullscreen=""></iframe>
+                </div></div>
+            </div>
         </div>
     </div>
 
@@ -32,7 +42,7 @@
         <input id="subject"  name="subject" placeholder="Array Manipulation" type="text">
 
         <label for="language">Language</label>
-        <input id="language"  name="language" placeholder="JavaScript" type="text" class="autocomplete">
+        <input id="language"  name="language" placeholder="JavaScript" type="text">
 
         <label for="level">Level</label>
         <input id="level" name="level" placeholder="2" type="number">
@@ -92,7 +102,7 @@
 
     <script>
         M.AutoInit();
-        PreHTMLGeneration();
+
         generatePreviewModal();
     </script>
 

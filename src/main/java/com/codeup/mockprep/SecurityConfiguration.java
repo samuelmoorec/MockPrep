@@ -62,11 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/admin"// only authenticated users can edit ads
                 )
                 .authenticated()
-                .and()
-                .csrf().disable().authorizeRequests().anyRequest().
-                authenticated().and().formLogin().loginPage("/login").
-                permitAll().and().logout().deleteCookies("rememberme").
-                permitAll().and().rememberMe().tokenValiditySeconds(60)
+
         ;
     }
 }

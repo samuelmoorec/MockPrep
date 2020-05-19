@@ -25,9 +25,18 @@
 
 .modal{
     max-height: 80%;
+    overflow-y: hidden;
 }
 
 .card .card-content{
     overflow-y: hidden;
     height: 200px;
+}
+
+.overflow{
+    overflow-y: scroll;
+}
+
+element.style {
+    overflow-y: scroll;
 }

@@ -70,24 +70,17 @@ populateQuestions = () => {
 
 QuestionProcedure = (Questions) => {
 
-    console.log("waiting to click")
 
     $(document).on("click",'.question-selector',function () {
 
-        console.log("I was clicked")
-
         let question_id = parseInt($(this).attr("data-id"));
 
-
-
         createQuestion(Questions, question_id);
-
 
         let currentQuestion = Questions[question_id];
 
         selectedQuestion(currentQuestion.id);
 
-        console.log("helloBBBBB");
 
     });
 
@@ -96,10 +89,6 @@ QuestionProcedure = (Questions) => {
 
 
 createQuestion = (Questions,ID) => {
-    console.log(1)
-
-
-    console.log(2)
 
         let question_id = ID
 
@@ -109,9 +98,9 @@ createQuestion = (Questions,ID) => {
                         <iframe width="50%" height="300px" src="https://www.youtube.com/embed/${currentQuestion.video_url}" frameborder="0" allowfullscreen></iframe>
                      </div>`;
 
-        let question = `<br/><p>${currentQuestion.question}</p>`;
+        let question = `<br/><pre>${currentQuestion.question}</pre>`;
 
-        let solution = `<br/><p>${currentQuestion.solution}</p>`
+        let solution = `<br/><pre>${currentQuestion.solution}</pre>`
 
         let modal_footer = generateModalFooter(question_id,Questions.length);
 
@@ -134,14 +123,7 @@ createQuestion = (Questions,ID) => {
 
         $('#question_modal').html(tabs);
 
-        console.log(3)
-
-
         $('#question_modal').addClass("no-autoinit");
-
-
-        console.log(4)
-
 
     M.AutoInit();
 
@@ -171,33 +153,34 @@ generateModalFooter = (questionID,QuestionObjectSize) => {
 
 selectedQuestion = (ID) => {
 
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
+
+
     let data = {}
     data["question_id"] = ID;
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
 
 
-
-    $.ajax({
-        type: "POST",
+    $.post({
         contentType: "application/json",
         url: "/questionSelection",
         data: JSON.stringify(data),
-        beforeSend: function (jqXHR) {
-            jqXHR.setRequestHeader('X-CSRF-Token', token,)
-        },
-        dataType: 'json',
         timeout: 600000,
         success: function (data) {
             $("#btn-update").prop("disabled", false);
-            //...
         },
         error: function (e) {
             $("#btn-save").prop("disabled", false);
+            console.log(e)
             //...
         }
     });
 }
+
+//"SyntaxError: Failed to execute 'setRequestHeader' on 'XMLHttpRequest': '${_csrf.headerName}' is not a valid HTTP header field name."
 
 generatePreHTML = (HTML) => {
     return HTML.replace(/</g ,"&lt").replace(/>/g ,"&gt");
@@ -207,12 +190,62 @@ generatePreHTML = (HTML) => {
 PreHTMLGeneration = () => {
     console.log("Generating Pre HTML")
 
+    // $(document).on('change', '#question', function() {
+    //     let question = $(this).val()
+    //     if($('#questionFormatType').is(":checked")){
+    //         question = generatePreHTML(question);
+    //     }
+    //     $('#questionFormatted').val(question)
+    //
+    // });
+    //
+    // $(document).on('click', '#questionFormatType', function() {
+    //     let question = $('#question').val()
+    //     if($('#questionFormatType').is(":checked")){
+    //         question = generatePreHTML(question);
+    //     }
+    //     $('#questionFormatted').val(question)
+    //
+    // });
+    //
+    // $(document).on('change', '#solution', function() {
+    //     let solution = $(this).val()
+    //     if($('#solutionFormatType').is(":checked")){
+    //         solution = generatePreHTML(solution);
+    //     }
+    //     $('#solutionFormatted').val(solution)
+    // });
+    //
+    // $(document).on('click', '#solutionFormatType', function() {
+    //     let question = $('#solution').val()
+    //     if($('#questionFormatType').is(":checked")){
+    //         question = generatePreHTML(question);
+    //     }
+    //     $('#questionFormatted').val(question)
+    //
+    // });
+
+
+
+}
+
+generatePreviewModal = () => {
+
     $(document).on('change', '#question', function() {
-        console.log("event change");
         let question = $(this).val()
-        console.log($('#questionFormatType').val());
         if($('#questionFormatType').is(":checked")){
             question = generatePreHTML(question);
+            question = `<code>${question}</code>`;
+        }
+        $('#questionFormatted').val(question)
+
+    });
+
+    $(document).on('click', '#questionFormatType', function() {
+        let question = $('#question').val()
+        if($('#questionFormatType').is(":checked")){
+            question = generatePreHTML(question);
+            question = `<code>${question}</code>`
         }
         $('#questionFormatted').val(question)
 
@@ -222,19 +255,26 @@ PreHTMLGeneration = () => {
         let solution = $(this).val()
         if($('#solutionFormatType').is(":checked")){
             solution = generatePreHTML(solution);
+            solution = `<code>${solution}</code>`
         }
         $('#solutionFormatted').val(solution)
     });
 
+    $(document).on('click', '#solutionFormatType', function() {
+        let solution = $('#solution').val()
+        if($('#solutionFormatType').is(":checked")){
+            solution = generatePreHTML(solution);
+            solution = `<code>${solution}</code>`
+        }
+        $('#solutionFormatted').val(solution)
 
+    });
 
-}
-
-generatePreviewModal = () => {
     console.log("Generating Preview Modal")
     $(document).on('click','#previewmodal', function () {
         PreviewModal();
     });
+
 }
 
 PreviewModal = () => {
@@ -265,6 +305,8 @@ PreviewModal = () => {
 
     $('#questionPreview').html(tabs);
 
+    M.AutoInit();
 
+    $('#questionPreview').addClass("no-autoinit");
 }
 

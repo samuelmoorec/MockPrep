@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,7 +80,6 @@ public class UserController{
         activityDao.save(newActivity);
         return "redirect:/login";
     }
-
 
     @GetMapping("/updateAccount")
     public String UpdateUserForm(){
