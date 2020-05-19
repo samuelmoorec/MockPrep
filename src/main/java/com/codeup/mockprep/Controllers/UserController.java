@@ -38,6 +38,7 @@ public class UserController{
 
     @GetMapping("/signup")
     public String SignUpForm(){
+        System.out.println( SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         if ( SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
             return "anonymousUser/createUser";
         }else{

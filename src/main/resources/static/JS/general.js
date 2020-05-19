@@ -171,8 +171,8 @@ generateModalFooter = (questionID,QuestionObjectSize) => {
 
 selectedQuestion = (ID) => {
 
-
-
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
     let data = {}
     data["question_id"] = ID;
 
@@ -183,6 +183,9 @@ selectedQuestion = (ID) => {
         contentType: "application/json",
         url: "/questionSelection",
         data: JSON.stringify(data),
+        beforeSend: function (jqXHR) {
+            jqXHR.setRequestHeader('X-CSRF-Token', token,)
+        },
         dataType: 'json',
         timeout: 600000,
         success: function (data) {
