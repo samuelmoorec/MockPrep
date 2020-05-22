@@ -2,41 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Questions</title>
+    <title>Activity</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 
-<th:block th:replace="admin/admin_partials :: admin_navbar_adminview">
+    <th:block th:replace="admin/admin_partials :: admin_navbar_adminview">
 
-</th:block>
+    </th:block>
 
-<header>
-    <h1 class="center">User Activities</h1>
-</header>
+    <header>
+        <h1 class="center">User Activities</h1>
+    </header>
 
-    <main id="activityFeed" class="container">
-
-    </main>
+    <main id="activityFeed" class="container"></main>
 
 <script>
-    (function($) {
+
         let request = $.ajax({'url': 'activities.json'});
         request.done(function (activities) {
-            let html = '<table><tr><th>First</th><th>Last</th><th>Username</th><th>Activity</th><th>TimeStamp</th></tr>';
+
+            let html = `<table>
+                            <tr>
+                                <th>First</th>
+                                <th>Last</th>
+                                <th>Username</th>
+                                <th>Activity</th>
+                                <th>TimeStamp</th>
+                            </tr>`;
+
             activities.forEach(function(activity) {
-                html += `<tr><td>${activity.user.first_name}</td>`;
-                html += `<td>${activity.user.last_name}</td>`;
-                html += `<td>${activity.user.username}</td>`;
-                html += `<td>${activity.type}</td>`;
-                html += `<td>${activity.timestamp}</td></tr>`;
+
+                html += `<tr>
+                            <td>${activity.user.first_name}</td>
+                            <td>${activity.user.last_name}</td>
+                            <td>${activity.user.username}</td>
+                            <td>${activity.type}</td>
+                            <td>${activity.timestamp}</td>
+                         </tr>`;
             });
+
             html += '</table>'
+
             $('#activityFeed').html(html);
         });
-    })(jQuery);
+
 </script>
 </body>
 </html>

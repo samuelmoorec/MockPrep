@@ -43,6 +43,13 @@ public class Activity {
         this.timestamp = timestamp;
     }
 
+    public Activity(Question question,User user, long timeInSec, String type, Timestamp timestamp) {
+        this.question = question;
+        this.user = user;
+        this.timeInSec = timeInSec;
+        this.type = type;
+        this.timestamp = timestamp;
+    }
 
     public long getId() {
         return id;

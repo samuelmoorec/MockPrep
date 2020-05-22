@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Questions</title>
+    <title>Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -33,17 +33,17 @@
     <form th:action="@{/login}" method="post">
 
         <div class="input-field col s6">
-            <label for="username">Username</label>
+            <label for="username" id="username_label" class="active">Username</label>
             <input id="username" name="username" type="text">
         </div>
 
         <div class="input-field col s6">
-            <label for="password">Password</label>
+            <label for="password" id="password_label" class="active">Password</label>
             <input id="password" name="password" type="password">
         </div>
 
 
-        <input class="btn right light-green darken-2" id="submit_button" style="margin-top: 10px" type="submit">
+        <input class="btn right light-green darken-2 signup_input" id="submit_button" type="submit">
     </form>
 
 
@@ -53,6 +53,16 @@
 
 <script>
     M.AutoInit();
+
+    setTimeout(function () {
+        if ($("#username").val() !== undefined){
+            $("#username_label").addClass("active");
+        }
+        if ($("#password").val() !== undefined){
+            $("#password_label").addClass("active");
+        }
+    },100);
+
 
 
 </script>

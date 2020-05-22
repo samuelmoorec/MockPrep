@@ -32,9 +32,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         ;
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+
+
                 /* Login configuration */
                 .formLogin()
                 .loginPage("/login")
@@ -59,6 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/admin"// only authenticated users can edit ads
                 )
                 .authenticated()
+
         ;
     }
 }

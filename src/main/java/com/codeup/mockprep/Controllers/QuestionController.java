@@ -60,13 +60,14 @@ public class QuestionController {
             @RequestParam(name = "subject") String subject,
             @RequestParam(name = "language") String language,
             @RequestParam(name = "level") Long level,
-            @RequestParam(name = "question") String question,
-            @RequestParam(name = "solution") String solution,
+            @RequestParam(name = "questionFormatted") String question,
+            @RequestParam(name = "solutionFormatted") String solution,
             @RequestParam(name = "solution_video") String solution_video,
             @RequestParam(name = "resource") String resource
             ){
             Question newQuestion = new Question(subject,language,level,question,solution,solution_video,resource);
             questionDao.save(newQuestion);
+        System.out.println(newQuestion.getSolution());
         return "redirect:/Questions";
     }
 

@@ -5,14 +5,15 @@ import com.codeup.mockprep.Models.Activity;
 import com.codeup.mockprep.Models.User;
 import com.codeup.mockprep.Repo.ActivityRepo;
 import com.codeup.mockprep.Repo.UserRepo;
+
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,7 @@ public class UserController{
 
     @GetMapping("/signup")
     public String SignUpForm(){
+        System.out.println( SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         if ( SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
             return "anonymousUser/createUser";
         }else{
@@ -79,7 +81,6 @@ public class UserController{
         return "redirect:/login";
     }
 
-
     @GetMapping("/updateAccount")
     public String UpdateUserForm(){
         return "editUser";
@@ -100,5 +101,12 @@ public class UserController{
         userDao.save(updatedUser);
         return "redirect:/Questions";
     }
+
+//    @PostMapping(value = "/addActivity", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+//    public void addActivity(
+//            @RequestBody String string) {
+//        System.out.println(string);
+//    }
+
 
 }

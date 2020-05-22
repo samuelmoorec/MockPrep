@@ -1,0 +1,42 @@
+.modal::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none;
+}
+
+.logout:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.tabs {
+    overflow: hidden;
+}
+
+.tabs .indicator {
+    background-color: #539a519e;
+}
+
+.tabs .tab a:focus, .tabs .tab a:focus.active{
+    background-color: rgba(55, 130, 67, 0.1);
+}
+
+.signup_input{
+    margin-top: 10px
+}
+
+.modal{
+    max-height: 80%;
+    overflow-y: hidden;
+}
+
+.card .card-content{
+    overflow-y: hidden;
+    height: 200px;
+}
+
+.overflow{
+    overflow-y: scroll;
+}
+
+element.style {
+    overflow-y: scroll;
+}
