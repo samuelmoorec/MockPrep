@@ -6,10 +6,7 @@ import com.codeup.mockprep.Repo.QuestionRepo;
 import com.codeup.mockprep.Repo.UserRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +25,11 @@ public class QuestionController {
     @GetMapping("/questions.json")
     public @ResponseBody List<Question> viewAllQuestionsInJSONFormat(){
         return questionDao.findAll();
+    }
+
+    @GetMapping("/question/{question_id}.json")
+    public @ResponseBody List<Question> viewUserInJSONFormat(@PathVariable long question_id){
+        return questionDao.findAllById(question_id);
     }
 
 
@@ -52,6 +54,33 @@ public class QuestionController {
         if (currentUser.isAdmin()){
             return "admin/createQuestion";
         }
+        return "redirect:/Questions";
+    }
+
+    @GetMapping("/editQuestion")
+    public String editQuestion(){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userDao.findByUsername(loggedInUser.getUsername());
+        if (currentUser.isAdmin()){
+            return "admin/editQuestion";
+        }
+        return "redirect:/Questions";
+    }
+
+    @PostMapping("/editQuestion")
+    public String SubmitQuestion(
+            @RequestParam(name = "question_id") Long id,
+            @RequestParam(name = "subject") String subject,
+            @RequestParam(name = "language") String language,
+            @RequestParam(name = "level") Long level,
+            @RequestParam(name = "questionFormatted") String question,
+            @RequestParam(name = "solutionFormatted") String solution,
+            @RequestParam(name = "solution_video") String solution_video,
+            @RequestParam(name = "resource") String resource
+    ){
+        Question newQuestion = new Question(id,subject,language,level,question,solution,solution_video,resource);
+        questionDao.save(newQuestion);
+        System.out.println(newQuestion.getSolution());
         return "redirect:/Questions";
     }
 

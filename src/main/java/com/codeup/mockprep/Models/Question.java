@@ -43,6 +43,17 @@ public class Question {
         this.resource = resource;
     }
 
+    public Question(long id, String title, String language, Long level, String question, String solution, String video_url, String resource) {
+        this.id = id;
+        this.title = title;
+        this.language = language;
+        this.level = level;
+        this.question = question;
+        this.solution = solution;
+        this.video_url = video_url;
+        this.resource = resource;
+    }
+
     public long getId() {
         return id;
     }
