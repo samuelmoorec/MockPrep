@@ -186,47 +186,25 @@ generatePreHTML = (HTML) => {
     return HTML.replace(/</g ,"&lt").replace(/>/g ,"&gt");
 }
 
+generateHTML = (PreHTML) => {
+    if (PreHTML.includes("<code>")) {
+        return  PreHTML.replace("<code>", "")
+            .replace("</code>", "")
+            .replace("<pre>", "")
+            .replace("</pre>", "")
+            .replace(/&lt/g, "<")
+            .replace(/&gt/g, ">")
+            .trim();
+
+    }else {
+        return PreHTML;
+    }
+}
+
+
 
 PreHTMLGeneration = () => {
     console.log("Generating Pre HTML")
-
-    // $(document).on('change', '#question', function() {
-    //     let question = $(this).val()
-    //     if($('#questionFormatType').is(":checked")){
-    //         question = generatePreHTML(question);
-    //     }
-    //     $('#questionFormatted').val(question)
-    //
-    // });
-    //
-    // $(document).on('click', '#questionFormatType', function() {
-    //     let question = $('#question').val()
-    //     if($('#questionFormatType').is(":checked")){
-    //         question = generatePreHTML(question);
-    //     }
-    //     $('#questionFormatted').val(question)
-    //
-    // });
-    //
-    // $(document).on('change', '#solution', function() {
-    //     let solution = $(this).val()
-    //     if($('#solutionFormatType').is(":checked")){
-    //         solution = generatePreHTML(solution);
-    //     }
-    //     $('#solutionFormatted').val(solution)
-    // });
-    //
-    // $(document).on('click', '#solutionFormatType', function() {
-    //     let question = $('#solution').val()
-    //     if($('#questionFormatType').is(":checked")){
-    //         question = generatePreHTML(question);
-    //     }
-    //     $('#questionFormatted').val(question)
-    //
-    // });
-
-
-
 }
 
 generatePreviewModal = () => {
@@ -270,6 +248,8 @@ generatePreviewModal = () => {
 
     });
 
+    PreviewModal();
+
     console.log("Generating Preview Modal")
     $(document).on('click','#previewmodal', function () {
         PreviewModal();
@@ -310,3 +290,38 @@ PreviewModal = () => {
     $('#questionPreview').addClass("no-autoinit");
 }
 
+getQuestionID = () => {
+
+    let queryString = window.location.search;
+    const urlParam = new URLSearchParams(queryString);
+    return urlParam.get('question');
+}
+
+getQuestionAJAX = () => {
+    let QuestionID = getQuestionID();
+    let questionJSONURL = `/question/${QuestionID}.json`;
+
+    (function($) {
+        let request = $.ajax({url : questionJSONURL});
+        request.done(function (questions) {
+            let currentQuestion = questions[0];
+            $('#question_id').val(currentQuestion.id);
+            $('#subject').val(currentQuestion.title);
+            $('#language').val(currentQuestion.language);
+            $('#level').val(currentQuestion.level);
+            $('#question').val(generateHTML(currentQuestion.question));
+            $('#questionFormatted').val(currentQuestion.question);
+            if ($('#questionFormatted').val().includes("<code>")){
+                $('#questionFormatType').prop('checked',true);
+            }
+            $('#solution').val(generateHTML(currentQuestion.solution));
+            $('#solutionFormatted').val(currentQuestion.solution);
+            if ($('#solutionFormatted').val().includes("<code>")){
+                $('#solutionFormatType').prop('checked',true);
+            }
+            $('#resource').val(currentQuestion.resource);
+            $('#solution_video').val(currentQuestion.video_url);
+            console.log(questions);
+        });
+    })(jQuery);
+}

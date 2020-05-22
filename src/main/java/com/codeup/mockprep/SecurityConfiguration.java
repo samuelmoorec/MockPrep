@@ -59,6 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/Questions", // only authenticated users can create ads
                         "/Question/Create",
                         "/CreateQuestion",
+                        "/editQuestion",
                         "/admin"// only authenticated users can edit ads
                 )
                 .authenticated()
