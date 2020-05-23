@@ -18,13 +18,13 @@ public class SQLBackupSeeder {
             for (Question currentQuestion : questions) {
                 sqlInsertStatements += "insert into mockprepdb.questions (id, language, level, question, resource, solution, title, video_url) values (";
                 sqlInsertStatements += currentQuestion.getId()        + ", ";
-                sqlInsertStatements += currentQuestion.getLanguage()  + ", ";
+                sqlInsertStatements += "'" + currentQuestion.getLanguage()  + "', ";
                 sqlInsertStatements += currentQuestion.getLevel()     + ", ";
-                sqlInsertStatements += currentQuestion.getQuestion()  + ", ";
-                sqlInsertStatements += currentQuestion.getResource()  + ", ";
-                sqlInsertStatements += currentQuestion.getSolution()  + ", ";
-                sqlInsertStatements += currentQuestion.getTitle()     + ", ";
-                sqlInsertStatements += currentQuestion.getVideo_url() + ");\n";
+                sqlInsertStatements += "'" + currentQuestion.getQuestion()  + "', ";
+                sqlInsertStatements += "'" + currentQuestion.getResource()  + "', ";
+                sqlInsertStatements += "'" + currentQuestion.getSolution()  + "', ";
+                sqlInsertStatements += "'" + currentQuestion.getTitle()     + "', ";
+                sqlInsertStatements += "'" + currentQuestion.getVideo_url() + "');\n";
             }
 
             return sqlInsertStatements;
