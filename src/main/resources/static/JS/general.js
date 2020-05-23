@@ -87,6 +87,144 @@ QuestionProcedure = (Questions) => {
 }
 
 
+formatTimeStamp = (TimeStamp) => {
+    console.log("getting Day");
+    let day = TimestampDay(TimeStamp);
+    console.log("getting Month");
+    let month = TimestampMonth(TimeStamp);
+    console.log("getting Date");
+
+    let date = TimestampDate(TimeStamp);
+    console.log("getting Year");
+
+    let year = TimestampYear(TimeStamp);
+    console.log("getting Time");
+
+    let time = TimestampTime(TimeStamp);
+
+    return `${time} ${day}, ${month} ${date}, ${year}`
+
+}
+
+TimestampDay = (TimeStamp) => {
+    let timeStamp = new Date(TimeStamp);
+    switch (timeStamp.getDay()) {
+        case 0:
+            return "Sunday";
+        case 1:
+             return "Monday";
+        case 2:
+            return "Tuesday";
+        case 3:
+            return "Wednesday";
+        case 4:
+            return "Thursday";
+        case 5:
+            return "Friday";
+        case 6:
+            return "Saturday";
+    }
+}
+
+TimestampMonth = (TimeStamp) => {
+    let timeStamp = new Date(TimeStamp);
+    switch (timeStamp.getMonth()) {
+        case 0:
+            return "January";
+        case 1:
+            return "February";
+        case 2:
+            return "March";
+        case 3:
+            return "April";
+        case 4:
+            return "May";
+        case 5:
+            return "June";
+        case 6:
+            return "July";
+        case 7:
+            return "August";
+        case 8:
+            return "September";
+        case 9:
+            return "October";
+        case 10:
+            return "November";
+        case 11:
+            return "December";
+    }
+}
+
+TimestampDate = (TimeStamp) => {
+    let timeStamp = new Date(TimeStamp);
+    return timeStamp.getDate();
+}
+
+TimestampYear = (TimeStamp) => {
+    let timeStamp = new Date(TimeStamp);
+    return timeStamp.getFullYear();
+}
+
+TimestampTime = (TimeStamp) => {
+    let timeStamp = new Date(TimeStamp);
+    let min = timeStamp.getMinutes().toString();
+    if (min.length === 1){
+        min = "0" + min;
+    }
+    switch (timeStamp.getHours()) {
+        case 0:
+            return `12:${min} AM`;
+        case 1:
+            return `01:${min} AM`;
+        case 2:
+            return `02:${min} AM`;
+        case 3:
+            return `03:${min} AM`;
+        case 4:
+            return `04:${min} AM`;
+        case 5:
+            return `05:${min} AM`;
+        case 6:
+            return `06:${min} AM`;
+        case 7:
+            return `07:${min} AM`;
+        case 8:
+            return `08:${min} AM`;
+        case 9:
+            return `09:${min} AM`;
+        case 10:
+            return `10:${min} AM`;
+        case 11:
+            return `11:${min} AM`;
+        case 12:
+            return `12:${min} AM`;
+        case 13:
+            return `01:${min} PM`;
+        case 14:
+            return `02:${min} PM`;
+        case 15:
+            return `03:${min} PM`;
+        case 16:
+            return `04:${min} PM`;
+        case 17:
+            return `05:${min} PM`;
+        case 18:
+            return `06:${min} PM`;
+        case 19:
+            return `07:${min} PM`;
+        case 20:
+            return `08:${min} PM`;
+        case 21:
+            return `09:${min} PM`;
+        case 22:
+            return `10:${min} PM`;
+        case 23:
+            return `11:${min} PM`;
+    }
+}
+
+
 
 createQuestion = (Questions,ID) => {
 
@@ -199,6 +337,37 @@ generateHTML = (PreHTML) => {
     }else {
         return PreHTML;
     }
+}
+
+adminActivityAjax = () => {
+    let request = $.ajax({'url': 'activitiesDescByTimeStamp.json'});
+    request.done(function (activities) {
+
+        let html = `<table>
+                            <tr>
+                                <th>First</th>
+                                <th>Last</th>
+                                <th>Username</th>
+                                <th>Activity</th>
+                                <th>TimeStamp</th>
+                            </tr>`;
+
+        activities.forEach(function(activity) {
+
+            html += `<tr>
+                            <td>${activity.user.first_name}</td>
+                            <td>${activity.user.last_name}</td>
+                            <td>${activity.user.username}</td>
+                            <td>${activity.type}</td>
+                            <td>${formatTimeStamp(activity.timestamp)}</td>
+                         </tr>`;
+        });
+
+        html += '</table>'
+
+        $('#activityFeed').html(html);
+    });
+
 }
 
 

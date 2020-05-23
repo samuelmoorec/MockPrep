@@ -8,6 +8,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -20,6 +27,8 @@ public class QuestionController {
         this.questionDao = questionDao;
         this.userDao = userDao;
     }
+
+
 
 
     @GetMapping("/questions.json")
@@ -37,6 +46,8 @@ public class QuestionController {
     public String questions(){
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = userDao.findByUsername(loggedInUser.getUsername());
+        SQLBackupSeeder seeder = new SQLBackupSeeder(questionDao);
+        System.out.println(seeder.CreateQuestionSeederSting());
         if (currentUser.isAdmin()){
             System.out.println("adminView");
             return "admin/admin_questions";
@@ -44,7 +55,32 @@ public class QuestionController {
         return "user/user_questions";
     }
 
+    @GetMapping("/backupQuestions")
+    public String SqlQuestionsInsertBackup() throws IOException {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userDao.findByUsername(loggedInUser.getUsername());
+        if (currentUser.isAdmin()){
+            LocalDate currentDate = LocalDate.now();
+            String directory = "src/main/resources/static/db";
+            String filename =  currentDate + "insertBackup.sql";
+            Path dataDirectory = Paths.get(directory);
+            Path dataFile = Paths.get(directory, filename);
 
+            if (Files.notExists(dataDirectory)) {
+                Files.createDirectories(dataDirectory);
+            }
+
+            if (! Files.exists(dataFile)) {
+                Files.createFile(dataFile);
+            }
+            SQLBackupSeeder seeder = new SQLBackupSeeder(questionDao);
+            Files.writeString(dataFile, seeder.CreateQuestionSeederSting());
+
+            return "redirect:/Questions";
+        }
+        return "redirect:/Questions";
+
+    }
 
 
     @GetMapping("/CreateQuestion")

@@ -5,6 +5,7 @@ import com.codeup.mockprep.Models.User;
 import com.codeup.mockprep.Repo.ActivityRepo;
 import com.codeup.mockprep.Repo.QuestionRepo;
 import com.codeup.mockprep.Repo.UserRepo;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,9 @@ public class AdminController {
         this.activityDao = activityDao;
     }
 
-    @GetMapping("/activities.json")
+    @GetMapping("/activitiesDescByTimeStamp.json")
     public @ResponseBody
-    List<Activity> viewAllActivitiesInJSONFormat(){ return activityDao.findAll();}
+    List<Activity> viewAllActivitiesInJSONFormat(){ return activityDao.findAll(Sort.by(Sort.Direction.DESC, "timestamp"));}
 
     @GetMapping("/SuperdupperlikereallySecretAdminmakerthingy")
     public String makeAdmin(){

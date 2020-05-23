@@ -56,6 +56,7 @@ public class UserController{
         Long dateInMilliSecs = new java.util.Date().getTime();
         Timestamp timestamp = new Timestamp(dateInMilliSecs);
         Activity newActivity = new Activity(userInDB,"Logged In",timestamp);
+        System.out.println("Logged in");
         activityDao.save(newActivity);
         return "redirect:/Questions";
     }

@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Activity</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <th:block th:replace="admin/admin_partials :: links_and_scripts" ></th:block>
 </head>
 <body>
 
@@ -20,35 +18,7 @@
     <main id="activityFeed" class="container"></main>
 
 <script>
-
-        let request = $.ajax({'url': 'activities.json'});
-        request.done(function (activities) {
-
-            let html = `<table>
-                            <tr>
-                                <th>First</th>
-                                <th>Last</th>
-                                <th>Username</th>
-                                <th>Activity</th>
-                                <th>TimeStamp</th>
-                            </tr>`;
-
-            activities.forEach(function(activity) {
-
-                html += `<tr>
-                            <td>${activity.user.first_name}</td>
-                            <td>${activity.user.last_name}</td>
-                            <td>${activity.user.username}</td>
-                            <td>${activity.type}</td>
-                            <td>${activity.timestamp}</td>
-                         </tr>`;
-            });
-
-            html += '</table>'
-
-            $('#activityFeed').html(html);
-        });
-
+    adminActivityAjax();
 </script>
 </body>
 </html>
