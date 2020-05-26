@@ -4,6 +4,7 @@ package com.codeup.mockprep.Controllers;
 import com.codeup.mockprep.Models.Activity;
 import com.codeup.mockprep.Models.User;
 import com.codeup.mockprep.Repo.ActivityRepo;
+import com.codeup.mockprep.Repo.QuestionRepo;
 import com.codeup.mockprep.Repo.UserRepo;
 
 import org.springframework.http.MediaType;
@@ -12,7 +13,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,11 +28,13 @@ public class UserController{
 
     private final UserRepo userDao;
     private final ActivityRepo activityDao;
+    private final QuestionRepo questionDao;
     private PasswordEncoder passwordEncoder;
 
-    public UserController(UserRepo userDao,ActivityRepo activityDao, PasswordEncoder passwordEncoder){
+    public UserController(UserRepo userDao,ActivityRepo activityDao, QuestionRepo questionDao, PasswordEncoder passwordEncoder){
         this.userDao = userDao;
         this.activityDao = activityDao;
+        this.questionDao = questionDao;
         this.passwordEncoder = passwordEncoder;}
 
     @GetMapping("/users.json")
@@ -101,6 +109,33 @@ public class UserController{
         updatedUser.setEmail(email);
         userDao.save(updatedUser);
         return "redirect:/Questions";
+    }
+
+    @GetMapping("/backupUsers")
+    public String SqlUserInsertBackup() throws IOException {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userDao.findByUsername(loggedInUser.getUsername());
+        if (currentUser.isAdmin()){
+            LocalDate currentDate = LocalDate.now();
+            String directory = "src/main/resources/static/db";
+            String filename =  currentDate + "insertUsers.sql";
+            Path dataDirectory = Paths.get(directory);
+            Path dataFile = Paths.get(directory, filename);
+
+            if (Files.notExists(dataDirectory)) {
+                Files.createDirectories(dataDirectory);
+            }
+
+            if (! Files.exists(dataFile)) {
+                Files.createFile(dataFile);
+            }
+            SQLBackupSeeder seeder = new SQLBackupSeeder(questionDao,userDao);
+            Files.writeString(dataFile, seeder.CreateUserSeederString());
+
+            return "redirect:/Questions";
+        }
+        return "redirect:/Questions";
+
     }
 
 //    @PostMapping(value = "/addActivity", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })

@@ -46,7 +46,7 @@ public class QuestionController {
     public String questions(){
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = userDao.findByUsername(loggedInUser.getUsername());
-        SQLBackupSeeder seeder = new SQLBackupSeeder(questionDao);
+        SQLBackupSeeder seeder = new SQLBackupSeeder(questionDao,userDao);
         System.out.println(seeder.CreateQuestionSeederSting());
         if (currentUser.isAdmin()){
             System.out.println("adminView");
@@ -73,7 +73,7 @@ public class QuestionController {
             if (! Files.exists(dataFile)) {
                 Files.createFile(dataFile);
             }
-            SQLBackupSeeder seeder = new SQLBackupSeeder(questionDao);
+            SQLBackupSeeder seeder = new SQLBackupSeeder(questionDao,userDao);
             Files.writeString(dataFile, seeder.CreateQuestionSeederSting());
 
             return "redirect:/Questions";
