@@ -370,6 +370,38 @@ adminActivityAjax = () => {
 
 }
 
+adminQuestionsAjax = () => {
+    let request = $.ajax({'url': 'questions.json'});
+    request.done(function (questions) {
+
+        let html = `<table>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Level</th>
+                                <th>Language</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>`;
+
+        questions.forEach(function(question) {
+
+            html += `<tr>
+                            <td>${question.id}</td>
+                            <td>${question.title}</td>
+                            <td>${question.level}</td>
+                            <td>${question.language}</td>
+                            <td><a href="/editQuestion?question=${question.id}">Edit</a></td>
+                            <td>Delete</td>
+                         </tr>`;
+        });
+
+        html += '</table>'
+
+        $('#questionsList').html(html);
+    });
+}
+
 
 
 PreHTMLGeneration = () => {
