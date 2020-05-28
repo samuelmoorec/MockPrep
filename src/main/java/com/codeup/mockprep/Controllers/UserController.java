@@ -6,20 +6,11 @@ import com.codeup.mockprep.Models.User;
 import com.codeup.mockprep.Repo.ActivityRepo;
 import com.codeup.mockprep.Repo.QuestionRepo;
 import com.codeup.mockprep.Repo.UserRepo;
-
-import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,21 +46,6 @@ public class UserController{
         }
     }
 
-
-    @GetMapping("/login/redirect")
-    public String LoginRedirect(){
-
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userInDB = userDao.findByUsername(loggedInUser.getUsername());
-        Long dateInMilliSecs = new java.util.Date().getTime();
-        Timestamp timestamp = new Timestamp(dateInMilliSecs);
-        Activity newActivity = new Activity(userInDB,"Logged In",timestamp);
-        System.out.println("Logged in");
-        activityDao.save(newActivity);
-        return "redirect:/Questions";
-    }
-
-
     @PostMapping("/signup")
     public String CreateUser(
             @RequestParam(name = "first_name") String first_name,
@@ -90,10 +66,26 @@ public class UserController{
         return "redirect:/login";
     }
 
+    @GetMapping("/login/redirect")
+    public String LoginRedirect(){
+
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userInDB = userDao.findByUsername(loggedInUser.getUsername());
+        Long dateInMilliSecs = new java.util.Date().getTime();
+        Timestamp timestamp = new Timestamp(dateInMilliSecs);
+        Activity newActivity = new Activity(userInDB,"Logged In",timestamp);
+        System.out.println("Logged in");
+        activityDao.save(newActivity);
+        return "redirect:/Questions";
+    }
+
+
+
     @GetMapping("/updateAccount")
     public String UpdateUserForm(){
         return "editUser";
     }
+
 
     @PostMapping("/user/update")
     public String UpdateUser(
@@ -110,39 +102,6 @@ public class UserController{
         userDao.save(updatedUser);
         return "redirect:/Questions";
     }
-
-    @GetMapping("/backupUsers")
-    public String SqlUserInsertBackup() throws IOException {
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User currentUser = userDao.findByUsername(loggedInUser.getUsername());
-        if (currentUser.isAdmin()){
-            LocalDate currentDate = LocalDate.now();
-            String directory = "src/main/resources/static/db";
-            String filename =  currentDate + "insertUsers.sql";
-            Path dataDirectory = Paths.get(directory);
-            Path dataFile = Paths.get(directory, filename);
-
-            if (Files.notExists(dataDirectory)) {
-                Files.createDirectories(dataDirectory);
-            }
-
-            if (! Files.exists(dataFile)) {
-                Files.createFile(dataFile);
-            }
-            SQLBackupSeeder seeder = new SQLBackupSeeder(questionDao,userDao);
-            Files.writeString(dataFile, seeder.CreateUserSeederString());
-
-            return "redirect:/Questions";
-        }
-        return "redirect:/Questions";
-
-    }
-
-//    @PostMapping(value = "/addActivity", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-//    public void addActivity(
-//            @RequestBody String string) {
-//        System.out.println(string);
-//    }
 
 
 }

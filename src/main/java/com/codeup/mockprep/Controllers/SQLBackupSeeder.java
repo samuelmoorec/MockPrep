@@ -4,9 +4,17 @@ import com.codeup.mockprep.Models.Question;
 import com.codeup.mockprep.Models.User;
 import com.codeup.mockprep.Repo.QuestionRepo;
 import com.codeup.mockprep.Repo.UserRepo;
-
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 
+@Controller
 public class SQLBackupSeeder {
 
     private final QuestionRepo questionDao;
@@ -52,6 +60,61 @@ public class SQLBackupSeeder {
         }
         return sqlInsertStatements;
         }
+
+
+    @GetMapping("/backupUsers")
+    public String SqlUserInsertBackup() throws IOException {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userDao.findByUsername(loggedInUser.getUsername());
+        if (currentUser.isAdmin()){
+            LocalDate currentDate = LocalDate.now();
+            String directory = "src/main/resources/static/db";
+            String filename =  currentDate + "insertUsers.sql";
+            Path dataDirectory = Paths.get(directory);
+            Path dataFile = Paths.get(directory, filename);
+
+            if (Files.notExists(dataDirectory)) {
+                Files.createDirectories(dataDirectory);
+            }
+
+            if (! Files.exists(dataFile)) {
+                Files.createFile(dataFile);
+            }
+            SQLBackupSeeder seeder = new SQLBackupSeeder(questionDao,userDao);
+            Files.writeString(dataFile, seeder.CreateUserSeederString());
+
+            return "redirect:/Questions";
+        }
+        return "redirect:/Questions";
+
+    }
+
+    @GetMapping("/backupQuestions")
+    public String SqlQuestionsInsertBackup() throws IOException {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userDao.findByUsername(loggedInUser.getUsername());
+        if (currentUser.isAdmin()){
+            LocalDate currentDate = LocalDate.now();
+            String directory = "src/main/resources/static/db";
+            String filename =  currentDate + "insertBackup.sql";
+            Path dataDirectory = Paths.get(directory);
+            Path dataFile = Paths.get(directory, filename);
+
+            if (Files.notExists(dataDirectory)) {
+                Files.createDirectories(dataDirectory);
+            }
+
+            if (! Files.exists(dataFile)) {
+                Files.createFile(dataFile);
+            }
+            SQLBackupSeeder seeder = new SQLBackupSeeder(questionDao,userDao);
+            Files.writeString(dataFile, seeder.CreateQuestionSeederSting());
+
+            return "redirect:/Questions";
+        }
+        return "redirect:/Questions";
+
+    }
 
 
 }

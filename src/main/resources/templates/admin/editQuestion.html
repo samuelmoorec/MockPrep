@@ -38,8 +38,8 @@
 
 <div class="container">
 
-    <form th:action="@{/CreateQuestion}" method="post">
-        <input type="hidden" id="question_id">
+    <form th:action="@{/editQuestion}" method="post">
+        <input type="hidden" id="question_id" name="question_id">
 
         <label for="subject">Subject</label>
         <input id="subject"  name="subject" placeholder="Array Manipulation" type="text">
