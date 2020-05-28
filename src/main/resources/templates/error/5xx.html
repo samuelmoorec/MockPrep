@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MockPrep: Error Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<th:block th:replace="user/user_partials :: user_navbar">
+</th:block>
+<div class="container center-align">
+    <h1 th:text="${error}" class="z-depth-5"></h1>
+    <h1 class="z-depth-5">500</h1>
+    <img class="codey" src="Images/codey_the_duck.png">
+</div>
+</body>
+</html>
