@@ -460,6 +460,16 @@ generatePreviewModal = () => {
         PreviewModal();
     });
 
+    $(document).on('change','#solution_video_url',function () {
+        $('#solution_video').val(GetYoutubeVideoID);
+    })
+}
+
+GetYoutubeVideoID = () => {
+    let youtubeURL = $('#solution_video_url').val().replace("?v=","?fakeparam=100&video=");
+    let urlParam = new URLSearchParams(youtubeURL);
+    let videoID = urlParam.get('video');
+    return videoID;
 }
 
 PreviewModal = () => {
@@ -525,8 +535,8 @@ getQuestionAJAX = () => {
                 $('#solutionFormatType').prop('checked',true);
             }
             $('#resource').val(currentQuestion.resource);
+            $('#solution_video_url').val("https://www.youtube.com/watch?v=" + currentQuestion.video_url);
             $('#solution_video').val(currentQuestion.video_url);
-            console.log(questions);
         });
     })(jQuery);
 }

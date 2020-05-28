@@ -79,20 +79,10 @@
         <label for="resource">Resource</label>
         <input  id="resource" name="resource" placeholder="https://java.codeup.com/javascript-i/arrays/manipulating/" type="url">
 
-        <label for="solution_video">Solution Video ID<a class="modal-trigger" data-target="modal1"  href="#modal1">What is this?</a></label>
-        <input id="solution_video" name="solution_video" placeholder="oigfaZ5ApsM" type="text">
+        <label for="solution_video_url">Youtube Video url</label>
+        <input id="solution_video_url" name="solution_video_url" placeholder="https://www.youtube.com/watch?v=eIrMbAQSU34" type="text">
 
-        <div id="modal1" class="modal">
-            <div class="modal-content">
-                <h2>YouTube Video ID</h2>
-                <p>The YouTube video ID is the series of characters that follows "v=" as shown in the image below.</p>
-                <br/>
-                <img class="responsive-img" th:src="@{/Images/Video_ID_help.png}" alt="VideoIDImage">
-            </div>
-            <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Okay</a>
-            </div>
-        </div>
+        <input id="solution_video" name="solution_video" type="hidden">
 
         <a class="modal-trigger btn left light-green darken-2 signup_input" id="previewmodal" href="#questionPreview">Preview</a>
 
