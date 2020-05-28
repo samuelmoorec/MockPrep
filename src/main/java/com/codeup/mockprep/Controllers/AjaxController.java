@@ -8,11 +8,7 @@ import com.codeup.mockprep.Repo.ActivityRepo;
 import com.codeup.mockprep.Repo.QuestionRepo;
 import com.codeup.mockprep.Repo.UserRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.sql.Timestamp;
 
 @RestController

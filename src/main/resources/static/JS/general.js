@@ -87,6 +87,144 @@ QuestionProcedure = (Questions) => {
 }
 
 
+formatTimeStamp = (TimeStamp) => {
+    console.log("getting Day");
+    let day = TimestampDay(TimeStamp);
+    console.log("getting Month");
+    let month = TimestampMonth(TimeStamp);
+    console.log("getting Date");
+
+    let date = TimestampDate(TimeStamp);
+    console.log("getting Year");
+
+    let year = TimestampYear(TimeStamp);
+    console.log("getting Time");
+
+    let time = TimestampTime(TimeStamp);
+
+    return `${time} ${day}, ${month} ${date}, ${year}`
+
+}
+
+TimestampDay = (TimeStamp) => {
+    let timeStamp = new Date(TimeStamp);
+    switch (timeStamp.getDay()) {
+        case 0:
+            return "Sunday";
+        case 1:
+             return "Monday";
+        case 2:
+            return "Tuesday";
+        case 3:
+            return "Wednesday";
+        case 4:
+            return "Thursday";
+        case 5:
+            return "Friday";
+        case 6:
+            return "Saturday";
+    }
+}
+
+TimestampMonth = (TimeStamp) => {
+    let timeStamp = new Date(TimeStamp);
+    switch (timeStamp.getMonth()) {
+        case 0:
+            return "January";
+        case 1:
+            return "February";
+        case 2:
+            return "March";
+        case 3:
+            return "April";
+        case 4:
+            return "May";
+        case 5:
+            return "June";
+        case 6:
+            return "July";
+        case 7:
+            return "August";
+        case 8:
+            return "September";
+        case 9:
+            return "October";
+        case 10:
+            return "November";
+        case 11:
+            return "December";
+    }
+}
+
+TimestampDate = (TimeStamp) => {
+    let timeStamp = new Date(TimeStamp);
+    return timeStamp.getDate();
+}
+
+TimestampYear = (TimeStamp) => {
+    let timeStamp = new Date(TimeStamp);
+    return timeStamp.getFullYear();
+}
+
+TimestampTime = (TimeStamp) => {
+    let timeStamp = new Date(TimeStamp);
+    let min = timeStamp.getMinutes().toString();
+    if (min.length === 1){
+        min = "0" + min;
+    }
+    switch (timeStamp.getHours()) {
+        case 0:
+            return `12:${min} AM`;
+        case 1:
+            return `01:${min} AM`;
+        case 2:
+            return `02:${min} AM`;
+        case 3:
+            return `03:${min} AM`;
+        case 4:
+            return `04:${min} AM`;
+        case 5:
+            return `05:${min} AM`;
+        case 6:
+            return `06:${min} AM`;
+        case 7:
+            return `07:${min} AM`;
+        case 8:
+            return `08:${min} AM`;
+        case 9:
+            return `09:${min} AM`;
+        case 10:
+            return `10:${min} AM`;
+        case 11:
+            return `11:${min} AM`;
+        case 12:
+            return `12:${min} AM`;
+        case 13:
+            return `01:${min} PM`;
+        case 14:
+            return `02:${min} PM`;
+        case 15:
+            return `03:${min} PM`;
+        case 16:
+            return `04:${min} PM`;
+        case 17:
+            return `05:${min} PM`;
+        case 18:
+            return `06:${min} PM`;
+        case 19:
+            return `07:${min} PM`;
+        case 20:
+            return `08:${min} PM`;
+        case 21:
+            return `09:${min} PM`;
+        case 22:
+            return `10:${min} PM`;
+        case 23:
+            return `11:${min} PM`;
+    }
+}
+
+
 
 createQuestion = (Questions,ID) => {
 
@@ -98,9 +236,9 @@ createQuestion = (Questions,ID) => {
                         <iframe width="50%" height="300px" src="https://www.youtube.com/embed/${currentQuestion.video_url}" frameborder="0" allowfullscreen></iframe>
                      </div>`;
 
-        let question = `<br/><pre>${currentQuestion.question}</pre>`;
+        let question = `<br/>${currentQuestion.question}`;
 
-        let solution = `<br/><pre>${currentQuestion.solution}</pre>`
+        let solution = `<br/>${currentQuestion.solution}`
 
         let modal_footer = generateModalFooter(question_id,Questions.length);
 
@@ -109,9 +247,9 @@ createQuestion = (Questions,ID) => {
                         <div class="row">
                             <div class="col s12 ">
                                 <ul class="tabs"  >
-                                  <li class="tab col s4"><a href="#test1" class="active light-green-text text-darken-1">Question</a></li>
-                                  <li class="tab col s4"><a href="#test2" class="light-green-text text-darken-1">Answer</a></li>
-                                  <li class="tab col s4"><a href="#test4" class="light-green-text text-darken-1">Video</a></li>
+                                  <li class="tab col s4"><a href="#test1" class="active">Question</a></li>
+                                  <li class="tab col s4"><a href="#test2" >Answer</a></li>
+                                  <li class="tab col s4"><a href="#test4" >Video</a></li>
                                 </ul>
                             </div>
                             <div id="test1" class="col s12">${question}</div>
@@ -183,7 +321,11 @@ selectedQuestion = (ID) => {
 //"SyntaxError: Failed to execute 'setRequestHeader' on 'XMLHttpRequest': '${_csrf.headerName}' is not a valid HTTP header field name."
 
 generatePreHTML = (HTML) => {
-    return HTML.replace(/</g ,"&lt").replace(/>/g ,"&gt");
+    let preHTML = `<pre><code>`;
+
+    preHTML += HTML.replace(/</g ,"&lt").replace(/>/g ,"&gt");
+
+    return preHTML + `</pre></code>`
 }
 
 generateHTML = (PreHTML) => {
@@ -201,6 +343,69 @@ generateHTML = (PreHTML) => {
     }
 }
 
+adminActivityAjax = () => {
+    let request = $.ajax({'url': 'activitiesDescByTimeStamp.json'});
+    request.done(function (activities) {
+
+        let html = `<table>
+                            <tr>
+                                <th>First</th>
+                                <th>Last</th>
+                                <th>Username</th>
+                                <th>Activity</th>
+                                <th>TimeStamp</th>
+                            </tr>`;
+
+        activities.forEach(function(activity) {
+
+            html += `<tr>
+                            <td>${activity.user.first_name}</td>
+                            <td>${activity.user.last_name}</td>
+                            <td>${activity.user.username}</td>
+                            <td>${activity.type}</td>
+                            <td>${formatTimeStamp(activity.timestamp)}</td>
+                         </tr>`;
+        });
+
+        html += '</table>'
+
+        $('#activityFeed').html(html);
+    });
+
+}
+
+adminQuestionsAjax = () => {
+    let request = $.ajax({'url': 'questions.json'});
+    request.done(function (questions) {
+
+        let html = `<table>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Level</th>
+                                <th>Language</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>`;
+
+        questions.forEach(function(question) {
+
+            html += `<tr>
+                            <td>${question.id}</td>
+                            <td>${question.title}</td>
+                            <td>${question.level}</td>
+                            <td>${question.language}</td>
+                            <td><a class="edit_button" href="/editQuestion?question=${question.id}">Edit</a></td>
+                            <td><a class="remove_button" href="/deleteQuestion/${question.id}">Remove</a></td>
+                         </tr>`;
+        });
+
+        html += '</table>'
+
+        $('#questionsList').html(html);
+    });
+}
+
 
 
 PreHTMLGeneration = () => {
@@ -213,7 +418,7 @@ generatePreviewModal = () => {
         let question = $(this).val()
         if($('#questionFormatType').is(":checked")){
             question = generatePreHTML(question);
-            question = `<code>${question}</code>`;
+            question = `${question}`;
         }
         $('#questionFormatted').val(question)
 
@@ -223,7 +428,7 @@ generatePreviewModal = () => {
         let question = $('#question').val()
         if($('#questionFormatType').is(":checked")){
             question = generatePreHTML(question);
-            question = `<code>${question}</code>`
+            question = `${question}`
         }
         $('#questionFormatted').val(question)
 
@@ -233,7 +438,7 @@ generatePreviewModal = () => {
         let solution = $(this).val()
         if($('#solutionFormatType').is(":checked")){
             solution = generatePreHTML(solution);
-            solution = `<code>${solution}</code>`
+            solution = `${solution}`
         }
         $('#solutionFormatted').val(solution)
     });
@@ -242,7 +447,7 @@ generatePreviewModal = () => {
         let solution = $('#solution').val()
         if($('#solutionFormatType').is(":checked")){
             solution = generatePreHTML(solution);
-            solution = `<code>${solution}</code>`
+            solution = `${solution}`
         }
         $('#solutionFormatted').val(solution)
 
@@ -263,9 +468,9 @@ PreviewModal = () => {
                         <iframe width="50%" height="300px" src="https://www.youtube.com/embed/${$('#solution_video').val()}" frameborder="0" allowfullscreen></iframe>
                      </div>`;
 
-    let question = `<br/><pre>${$('#questionFormatted').val()}</pre>`;
+    let question = `<br/>${$('#questionFormatted').val()}`;
 
-    let solution = `<br/><pre>${$('#solutionFormatted').val()}</pre>`
+    let solution = `<br/>${$('#solutionFormatted').val()}`
 
     let tabs = `<div class="modal-content noScrollBar" style="height: auto" >
                         <h5 class="center" >${$('#subject').val()}</h5>

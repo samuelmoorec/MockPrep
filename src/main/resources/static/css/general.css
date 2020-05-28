@@ -19,6 +19,55 @@
     background-color: rgba(55, 130, 67, 0.1);
 }
 
+.tabs .tab a:hover, .tabs .tab a.active{
+    color: #7cb342;
+    background-color: rgba(55, 130, 67, 0.1);
+}
+
+.tabs .tab a{
+    color: #7cb342;
+}
+
+.switch label input[type=checkbox]:checked+.lever{
+    background-color: rgba(55, 130, 67, 0.3);
+}
+
+.switch label input[type=checkbox]:checked+.lever:after{
+    background-color: #7cb342;
+}
+
+.remove_button{
+    color: #dd1e1e;
+    background-color: #dc2c2c4f;
+    border-radius: 5px;
+    padding: 3px;
+    transition: 250ms;
+}
+
+.remove_button:hover{
+    color: rgba(255, 255, 255, 0.88);
+    background-color: rgba(220, 44, 44, 0.81);
+    border-radius: 5px;
+    padding: 3px;
+    transition: 250ms;
+}
+
+.edit_button{
+    color: #039be5;
+    background-color: rgba(23, 164, 248, 0.26);
+    border-radius: 5px;
+    padding: 3px 6px;
+    transition: 250ms;
+}
+
+.edit_button:hover{
+    color: rgba(255, 255, 255, 0.88);
+    background-color: #039be5;
+    border-radius: 5px;
+    padding: 3px 6px;
+    transition: 250ms;
+}
+
 .signup_input{
     margin-top: 10px
 }
