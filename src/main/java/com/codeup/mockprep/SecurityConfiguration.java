@@ -64,6 +64,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/admin"// only authenticated users can edit ads
                 )
                 .authenticated()
+                .and()
+
+                /* */
+                .sessionManagement()
+                .maximumSessions(2).and()
+                .invalidSessionUrl("/login")
+
+
 
         ;
     }
