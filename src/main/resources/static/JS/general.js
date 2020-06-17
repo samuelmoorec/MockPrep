@@ -8,8 +8,21 @@ question_AJAX_request = () => {
         populateQuestions();
 
     });
+}
 
 
+shuffle = (array) => {
+
+
+    let newArray = [];
+
+    while(array.length > 0){
+        let random = Math.floor(Math.random() * array.length)
+        newArray.push(array[random])
+        array.splice(random,1);
+    }
+
+    return newArray;
 
 }
 
@@ -22,7 +35,7 @@ populateQuestions = () => {
         // we are on since and enhanced for loop doesnt give us one.
         let i = 0;
 
-        Questions.forEach((question) => {
+        shuffle(Questions).forEach((question) => {
 
             // We check to see if the iteration is even so we know to add a div with the class of row.
             // This is what allows us to pair two cards together
