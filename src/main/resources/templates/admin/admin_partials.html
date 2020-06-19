@@ -124,15 +124,24 @@
                     <li><a href="/CreateQuestion">Create</a></li>
                     <li><a href="/admin">Admin</a></li>
                 </ul>
+
                 <ul class="right hide-on-med-and-down">
-                    <li><a class="modal-trigger" href="#optionsmodal">Filter</a></li>
+                    <li>
+                            <form id="search_form">
+                                <div class="input-field">
+                                    <input id="search_term" type="search" required>
+                                    <label class="label-icon" for="search_term"><i class="material-icons">search</i></label>
+                                    <i class="material-icons">close</i>
+                                </div>
+                            </form>
+                    </li>
                     <li class="logout">
-                        <form class="right" th:action="@{/logout}" th:method="post">
+                        <form th:action="@{/logout}" th:method="post">
                             <button class="hover white-text waves-effect waves-light btn-flat">Logout</button>
                         </form>
                     </li>
-                </ul>
 
+                </ul>
             </div>
         </nav>
     </div>

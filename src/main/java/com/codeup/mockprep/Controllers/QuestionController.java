@@ -38,6 +38,13 @@ public class QuestionController {
         return questionDao.findAllById(question_id);
     }
 
+    @GetMapping("/questions_filtered.json")
+    public @ResponseBody List<Question> viewUserInJSONFormat(@RequestParam String search_term){
+        return questionDao.FindBySearchTerm(search_term);
+    }
+
+
+
     @GetMapping("/CreateQuestion")
     public String addQuestionForm(){
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -115,10 +122,18 @@ public class QuestionController {
 
     @GetMapping("/deleteQuestion/{question_id}")
     public String DeleteQuestion(@PathVariable long question_id){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userDao.findByUsername(loggedInUser.getUsername());
+
+        if (!currentUser.isAdmin()){
+
+            return "redirect:/Questions";
+        }else {
+            activityDao.deleteAllByQuestion_Id(question_id);
+            questionDao.deleteById(question_id);
+        }
 
 
-        activityDao.deleteAllByQuestion_Id(question_id);
-        questionDao.deleteById(question_id);
         return "redirect:/admin#questions";
     }
 }

@@ -6,7 +6,7 @@ question_AJAX_request = () => {
     request.done((questions) => {
         QuestionsObject = questions;
         populateQuestions();
-
+        searchQuestion_AJAX_Request();
     });
 }
 
@@ -26,6 +26,29 @@ shuffle = (array) => {
 
 }
 
+searchQuestion_AJAX_Request = () =>{
+
+    $(document).on("click",'#apply_filters',function () {
+        let searchTerm = $('#search_term').val();
+        let searchParam = `search_term=${searchTerm}`
+        let jsonURL = `/questions_filtered.json?${searchParam}`
+        console.log(jsonURL);
+        request = $.ajax({'url': jsonURL, 'async': 'false' })
+        populateQuestions();
+    });
+
+    $( "#search_form" ).submit(function( event ) {
+        event.preventDefault();
+        let searchTerm = $('#search_term').val();
+        let searchParam = `search_term=${searchTerm}`
+        let jsonURL = `/questions_filtered.json?${searchParam}`
+        console.log(jsonURL);
+        request = $.ajax({'url': jsonURL, 'async': 'false' })
+        populateQuestions();
+    });
+
+}
+
 populateQuestions = () => {
 
     request.done((Questions) => {
@@ -35,7 +58,9 @@ populateQuestions = () => {
         // we are on since and enhanced for loop doesnt give us one.
         let i = 0;
 
-        shuffle(Questions).forEach((question) => {
+        let ajaxQuestions = shuffle(Questions);
+
+        ajaxQuestions.forEach((question) => {
 
             // We check to see if the iteration is even so we know to add a div with the class of row.
             // This is what allows us to pair two cards together
@@ -68,7 +93,7 @@ populateQuestions = () => {
 
         M.AutoInit();
 
-        QuestionProcedure(Questions);
+        QuestionProcedure(ajaxQuestions);
 
 
 
@@ -358,7 +383,10 @@ generateHTML = (PreHTML) => {
 
 adminActivityAjax = () => {
     let request = $.ajax({'url': 'activitiesDescByTimeStamp.json'});
+    let questionRequest = $.ajax({'url': '/questions.json'})
     request.done(function (activities) {
+
+
 
         let html = `<table>
                             <tr>
@@ -366,23 +394,43 @@ adminActivityAjax = () => {
                                 <th>Last</th>
                                 <th>Username</th>
                                 <th>Activity</th>
+                                <th>Question</th>
                                 <th>TimeStamp</th>
                             </tr>`;
 
         activities.forEach(function(activity) {
 
+            console.log(activity);
+
+            if (activity.question != null){
+                console.log(activity.question.title)
+            }
+
+
             html += `<tr>
                             <td>${activity.user.first_name}</td>
                             <td>${activity.user.last_name}</td>
                             <td>${activity.user.username}</td>
-                            <td>${activity.type}</td>
-                            <td>${formatTimeStamp(activity.timestamp)}</td>
+                            <td>${activity.type}</td>`
+
+
+                if (activity.question != null){
+                    html += `<td>${activity.question.title}</td>`
+                }else(
+                    html += `<td></td>`
+                )
+
+
+
+            html +=        `<td>${formatTimeStamp(activity.timestamp)}</td>
                          </tr>`;
         });
 
         html += '</table>'
 
         $('#activityFeed').html(html);
+
+
     });
 
 }
