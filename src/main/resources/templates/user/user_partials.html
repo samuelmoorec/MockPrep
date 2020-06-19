@@ -50,9 +50,17 @@
                         <li class="active"><a href="/Questions">Questions</a></li>
                     </ul>
                     <ul class="right hide-on-med-and-down">
-                        <li><a class="modal-trigger" href="#optionsmodal">Filter</a></li>
+                        <li>
+                            <form id="search_form">
+                                <div class="input-field">
+                                    <input id="search_term" type="search">
+                                    <label class="label-icon" for="search_term"><i class="material-icons">search</i></label>
+
+                                </div>
+                            </form>
+                        </li>
                         <li class="logout">
-                            <form class="right" th:action="@{/logout}" th:method="post">
+                            <form th:action="@{/logout}" th:method="post">
                                 <button class="hover white-text waves-effect waves-light btn-flat">Logout</button>
                             </form>
                         </li>
