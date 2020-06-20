@@ -61,7 +61,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/CreateQuestion",
                         "/editQuestion",
                         "/backupQuestions",
-                        "/admin"// only authenticated users can edit ads
+                        "/admin",// only authenticated users can edit ads
+                        "/users.json"
                 )
                 .authenticated()
 

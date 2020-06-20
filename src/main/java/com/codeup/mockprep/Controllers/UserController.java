@@ -6,11 +6,13 @@ import com.codeup.mockprep.Models.User;
 import com.codeup.mockprep.Repo.ActivityRepo;
 import com.codeup.mockprep.Repo.QuestionRepo;
 import com.codeup.mockprep.Repo.UserRepo;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +31,20 @@ public class UserController{
         this.passwordEncoder = passwordEncoder;}
 
     @GetMapping("/users.json")
-    public @ResponseBody List<User> viewAllUsersInJSONFormat(){ return userDao.findAll();}
+    public @ResponseBody List<User> viewAllUsersInJSONFormat(){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userDao.findByUsername(loggedInUser.getUsername());
+
+            if (currentUser.isAdmin()){
+
+                return userDao.findAll();
+
+            }else{
+                return userDao.findAllById(currentUser.getId());
+            }
+
+        }
+
 
     @GetMapping("/currentUser.json")
     public @ResponseBody List<User> viewUserInJSONFormat(){

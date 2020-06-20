@@ -2,11 +2,14 @@ package com.codeup.mockprep.Controllers;
 
 import com.codeup.mockprep.Models.Question;
 import com.codeup.mockprep.Models.User;
+import com.codeup.mockprep.Repo.ActivityRepo;
 import com.codeup.mockprep.Repo.QuestionRepo;
 import com.codeup.mockprep.Repo.UserRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Controller
@@ -14,10 +17,12 @@ public class QuestionController {
 
     private final QuestionRepo questionDao;
     private final UserRepo userDao;
+    private final ActivityRepo activityDao;
 
-    public QuestionController(QuestionRepo questionDao,UserRepo userDao){
+    public QuestionController(QuestionRepo questionDao,UserRepo userDao, ActivityRepo activityDao){
         this.questionDao = questionDao;
         this.userDao = userDao;
+        this.activityDao = activityDao;
     }
 
 
@@ -32,6 +37,13 @@ public class QuestionController {
     public @ResponseBody List<Question> viewUserInJSONFormat(@PathVariable long question_id){
         return questionDao.findAllById(question_id);
     }
+
+    @GetMapping("/questions_filtered.json")
+    public @ResponseBody List<Question> viewUserInJSONFormat(@RequestParam String search_term){
+        return questionDao.FindBySearchTerm(search_term);
+    }
+
+
 
     @GetMapping("/CreateQuestion")
     public String addQuestionForm(){
@@ -107,9 +119,21 @@ public class QuestionController {
 
     }
 
+
     @GetMapping("/deleteQuestion/{question_id}")
     public String DeleteQuestion(@PathVariable long question_id){
-        questionDao.deleteById(question_id);
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userDao.findByUsername(loggedInUser.getUsername());
+
+        if (!currentUser.isAdmin()){
+
+            return "redirect:/Questions";
+        }else {
+            activityDao.deleteAllByQuestion_Id(question_id);
+            questionDao.deleteById(question_id);
+        }
+
+
         return "redirect:/admin#questions";
     }
 }

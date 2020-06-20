@@ -10,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,7 +30,19 @@ public class AdminController {
 
     @GetMapping("/activitiesDescByTimeStamp.json")
     public @ResponseBody
-    List<Activity> viewAllActivitiesInJSONFormat(){ return activityDao.findAll(Sort.by(Sort.Direction.DESC, "timestamp"));}
+    List<Activity> viewAllActivitiesInJSONFormat(){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userDao.findByUsername(loggedInUser.getUsername());
+        if (currentUser.isAdmin()){
+
+            return activityDao.findAll(Sort.by(Sort.Direction.DESC, "timestamp"));
+
+    }else{
+            List<Activity> emptyList = new ArrayList<Activity>();
+
+            return emptyList;
+        }
+   }
 
     @GetMapping("/SuperdupperlikereallySecretAdminmakerthingy")
     public String makeAdmin(){

@@ -89,3 +89,13 @@
 element.style {
     overflow-y: scroll;
 }
+.input-field{
+    position: relative;
+}
+
+nav .input-field {
+    position: relative;
+    margin: 0px;
+    height: fit-content;
+
+}
