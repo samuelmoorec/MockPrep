@@ -22,6 +22,9 @@ public class IndexController {
 
     @GetMapping("/home")
     public String home(){
+        System.out.println(userDao.findByUsername("amscamp"));
+
+
         if ( SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
             return "anonymousUser/anonymous_index";
         }else{

@@ -10,7 +10,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.model.IModel;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +70,41 @@ public class UserController{
             @RequestParam(name = "last_name") String last_name,
             @RequestParam(name = "email") String email,
             @RequestParam(name = "username") String username,
-            @RequestParam(name = "password") String password
+            @RequestParam(name = "password") String password,
+            @RequestParam(name = "password_confirm") String password_Confirm,
+            Model model
     ){
-        System.out.println(password);
+
+        if (userDao.findByEmail(email) != null){
+            //email already exists
+            model.addAttribute("first_name", first_name);
+            model.addAttribute("last_name", last_name);
+            model.addAttribute("username", username);
+            String errorString = "That email is already associated with an account.";
+            model.addAttribute("error", errorString);
+            return "anonymousUser/createUser";
+        }
+
+        if (userDao.findByUsername(username) != null){
+
+            model.addAttribute("first_name", first_name);
+            model.addAttribute("last_name", last_name);
+            model.addAttribute("email", email);
+            String errorString = "That username is already associated with an account.";
+            model.addAttribute("error", errorString);
+            return "anonymousUser/createUser";
+        }
+
+        if (!password.equals(password_Confirm)){
+            model.addAttribute("first_name", first_name);
+            model.addAttribute("last_name", last_name);
+            model.addAttribute("email", email);
+            model.addAttribute("username", username);
+            String errorString = "The passwords do not match.";
+            model.addAttribute("error", errorString);
+            return "anonymousUser/createUser";
+        }
+
         String hashedPassword = passwordEncoder.encode(password);
         User newUser = new User(username,email,first_name,last_name,hashedPassword,false);
         userDao.save(newUser);

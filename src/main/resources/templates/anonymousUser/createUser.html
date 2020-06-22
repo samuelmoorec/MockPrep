@@ -17,36 +17,44 @@
     <h1 class="center">Create an Account</h1>
     <div class="center">
         Already have an Account? <a class="green-text" th:href="@{/login}">Login</a>
+        <br>
+        <p class="red-text" th:text="${error}" ></p>
     </div>
 </header>
 
 <div class="container">
 
+
     <form th:action="@{/signup}" method="post">
 
         <div class="input-field col s6">
         <label for="first_name">First Name</label>
-        <input required id="first_name"  name="first_name" type="text">
+        <input required id="first_name" th:value="${first_name}"  name="first_name" type="text">
         </div>
 
         <div class="input-field col s6">
         <label for="last_name">Last Name</label>
-        <input id="last_name"  name="last_name" type="text">
+        <input id="last_name" th:value="${last_name}"  name="last_name" type="text">
         </div>
 
         <div class="input-field col s6">
         <label for="email">Email</label>
-        <input required id="email" name="email" type="email">
+        <input required id="email" th:value="${email}" name="email" type="email">
         </div>
 
         <div class="input-field col s6">
         <label for="username">Username</label>
-        <input required id="username" name="username" type="text">
+        <input required id="username" th:value="${username}" name="username" type="text">
         </div>
 
         <div class="input-field col s6">
         <label for="password">Password</label>
         <input required id="password" name="password" type="password">
+        </div>
+
+        <div class="input-field col s6">
+            <label for="password_confirm">Confirm Password</label>
+            <input required id="password_confirm" name="password_confirm" type="password">
         </div>
 
         <input class="btn right light-green darken-2 signup_input" type="submit">

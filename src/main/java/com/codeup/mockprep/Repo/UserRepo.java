@@ -10,7 +10,11 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
 
+    User findByEmail(String email);
+
     List<User> findAllById(Long id);
 
     Optional<User> findById(Long id);
+
+
 }
