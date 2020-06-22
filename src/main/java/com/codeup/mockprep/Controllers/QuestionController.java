@@ -1,15 +1,10 @@
 package com.codeup.mockprep.Controllers;
 
-import com.codeup.mockprep.Models.Question;
-import com.codeup.mockprep.Models.User;
-import com.codeup.mockprep.Repo.ActivityRepo;
-import com.codeup.mockprep.Repo.QuestionRepo;
-import com.codeup.mockprep.Repo.UserRepo;
+import com.codeup.mockprep.Models.*;
+import com.codeup.mockprep.Repo.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Controller
