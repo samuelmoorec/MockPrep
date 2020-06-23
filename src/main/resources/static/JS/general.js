@@ -2,7 +2,7 @@ let request;
 let QuestionsObject;
 
 question_AJAX_request = () => {
-   request = $.ajax({'url': '/questions.json', 'async': 'false' })
+    request = $.ajax({'url': '/questions.json', 'async': 'false'})
     request.done((questions) => {
         QuestionsObject = questions;
         populateQuestions();
@@ -16,34 +16,34 @@ shuffle = (array) => {
 
     let newArray = [];
 
-    while(array.length > 0){
+    while (array.length > 0) {
         let random = Math.floor(Math.random() * array.length)
         newArray.push(array[random])
-        array.splice(random,1);
+        array.splice(random, 1);
     }
 
     return newArray;
 
 }
 
-searchQuestion_AJAX_Request = () =>{
+searchQuestion_AJAX_Request = () => {
 
-    $(document).on("click",'#apply_filters',function () {
+    $(document).on("click", '#apply_filters', function () {
         let searchTerm = $('#search_term').val();
         let searchParam = `search_term=${searchTerm}`
         let jsonURL = `/questions_filtered.json?${searchParam}`
         console.log(jsonURL);
-        request = $.ajax({'url': jsonURL, 'async': 'false' })
+        request = $.ajax({'url': jsonURL, 'async': 'false'})
         populateQuestions();
     });
 
-    $( "#search_form" ).submit(function( event ) {
+    $("#search_form").submit(function (event) {
         event.preventDefault();
         let searchTerm = $('#search_term').val();
         let searchParam = `search_term=${searchTerm}`
         let jsonURL = `/questions_filtered.json?${searchParam}`
         console.log(jsonURL);
-        request = $.ajax({'url': jsonURL, 'async': 'false' })
+        request = $.ajax({'url': jsonURL, 'async': 'false'})
         populateQuestions();
     });
 
@@ -64,7 +64,9 @@ populateQuestions = () => {
 
             // We check to see if the iteration is even so we know to add a div with the class of row.
             // This is what allows us to pair two cards together
-            if(i % 2 === 0){    html += '<div class="row">';    }
+            if (i % 2 === 0) {
+                html += '<div class="row">';
+            }
 
             html += `<div class="col s12 m6 l6">
                         <div class="card light-green ">
@@ -81,7 +83,9 @@ populateQuestions = () => {
 
             // Here is where we decide when to put the closing tag on the div with the class of row.
             // it is added for all odd iterations or if we are on the last card
-            if (i % 2 === 1 || i === Questions.size ){  html += '</div>';   }
+            if (i % 2 === 1 || i === Questions.size) {
+                html += '</div>';
+            }
 
             i++;
 
@@ -96,12 +100,7 @@ populateQuestions = () => {
         QuestionProcedure(ajaxQuestions);
 
 
-
-
     })
-
-
-
 
 
 }
@@ -109,7 +108,7 @@ populateQuestions = () => {
 QuestionProcedure = (Questions) => {
 
 
-    $(document).on("click",'.question-selector',function () {
+    $(document).on("click", '.question-selector', function () {
 
         let question_id = parseInt($(this).attr("data-id"));
 
@@ -126,17 +125,14 @@ QuestionProcedure = (Questions) => {
 
 
 formatTimeStamp = (TimeStamp) => {
-    console.log("getting Day");
+
     let day = TimestampDay(TimeStamp);
-    console.log("getting Month");
+
     let month = TimestampMonth(TimeStamp);
-    console.log("getting Date");
 
     let date = TimestampDate(TimeStamp);
-    console.log("getting Year");
 
     let year = TimestampYear(TimeStamp);
-    console.log("getting Time");
 
     let time = TimestampTime(TimeStamp);
 
@@ -150,7 +146,7 @@ TimestampDay = (TimeStamp) => {
         case 0:
             return "Sunday";
         case 1:
-             return "Monday";
+            return "Monday";
         case 2:
             return "Tuesday";
         case 3:
@@ -207,7 +203,7 @@ TimestampYear = (TimeStamp) => {
 TimestampTime = (TimeStamp) => {
     let timeStamp = new Date(TimeStamp);
     let min = timeStamp.getMinutes().toString();
-    if (min.length === 1){
+    if (min.length === 1) {
         min = "0" + min;
     }
     switch (timeStamp.getHours()) {
@@ -263,24 +259,23 @@ TimestampTime = (TimeStamp) => {
 }
 
 
+createQuestion = (Questions, ID) => {
 
-createQuestion = (Questions,ID) => {
+    let question_id = ID
 
-        let question_id = ID
+    let currentQuestion = Questions[question_id];
 
-        let currentQuestion = Questions[question_id];
-
-        let video = `<div class="video-container">
+    let video = `<div class="video-container">
                         <iframe width="50%" height="300px" src="https://www.youtube.com/embed/${currentQuestion.video_url}" frameborder="0" allowfullscreen></iframe>
                      </div>`;
 
-        let question = `<br/>${currentQuestion.question}`;
+    let question = `<br/>${currentQuestion.question}`;
 
-        let solution = `<br/>${currentQuestion.solution}`
+    let solution = `<br/>${currentQuestion.solution}`
 
-        let modal_footer = generateModalFooter(question_id,Questions.length);
+    let modal_footer = generateModalFooter(question_id, Questions.length);
 
-        let tabs = `<div class="modal-content noScrollBar" style="height: auto" >
+    let tabs = `<div class="modal-content noScrollBar" style="height: auto" >
                         <h5 class="center" >${currentQuestion.title}</h5>
                         <div class="row">
                             <div class="col s12 ">
@@ -297,16 +292,16 @@ createQuestion = (Questions,ID) => {
                         ${modal_footer}
                     </div>`;
 
-        $('#question_modal').html(tabs);
+    $('#question_modal').html(tabs);
 
-        $('#question_modal').addClass("no-autoinit");
+    $('#question_modal').addClass("no-autoinit");
 
     M.AutoInit();
 
 
 }
 
-generateModalFooter = (questionID,QuestionObjectSize) => {
+generateModalFooter = (questionID, QuestionObjectSize) => {
 
     let footerHTML = `<div class="modal-footer">
                           <a href="#question_modal" data-id="${questionID - 1}" class="modal-trigger waves-effect waves-green btn-flat left question-selector">Previous</a>
@@ -335,7 +330,7 @@ selectedQuestion = (ID) => {
 
     let data = {}
     data["question_id"] = ID;
-    $(document).ajaxSend(function(e, xhr, options) {
+    $(document).ajaxSend(function (e, xhr, options) {
         xhr.setRequestHeader(header, token);
     });
 
@@ -361,14 +356,14 @@ selectedQuestion = (ID) => {
 generatePreHTML = (HTML) => {
     let preHTML = `<pre><code>`;
 
-    preHTML += HTML.replace(/</g ,"&lt").replace(/>/g ,"&gt");
+    preHTML += HTML.replace(/</g, "&lt").replace(/>/g, "&gt");
 
     return preHTML + `</pre></code>`
 }
 
 generateHTML = (PreHTML) => {
     if (PreHTML.includes("<code>")) {
-        return  PreHTML.replace("<code>", "")
+        return PreHTML.replace("<code>", "")
             .replace("</code>", "")
             .replace("<pre>", "")
             .replace("</pre>", "")
@@ -376,7 +371,7 @@ generateHTML = (PreHTML) => {
             .replace(/&gt/g, ">")
             .trim();
 
-    }else {
+    } else {
         return PreHTML;
     }
 }
@@ -385,7 +380,6 @@ adminActivityAjax = () => {
     let request = $.ajax({'url': 'activitiesDescByTimeStamp.json'});
     let questionRequest = $.ajax({'url': '/questions.json'})
     request.done(function (activities) {
-
 
 
         let html = `<table>
@@ -398,14 +392,7 @@ adminActivityAjax = () => {
                                 <th>TimeStamp</th>
                             </tr>`;
 
-        activities.forEach(function(activity) {
-
-            console.log(activity);
-
-            if (activity.question != null){
-                console.log(activity.question.title)
-            }
-
+        activities.forEach(function (activity) {
 
             html += `<tr>
                             <td>${activity.user.first_name}</td>
@@ -413,16 +400,13 @@ adminActivityAjax = () => {
                             <td>${activity.user.username}</td>
                             <td>${activity.type}</td>`
 
+            if (activity.question != null) {
+                html += `<td>${activity.question.title}</td>`
+            } else (
+                html += `<td></td>`
+            )
 
-                if (activity.question != null){
-                    html += `<td>${activity.question.title}</td>`
-                }else(
-                    html += `<td></td>`
-                )
-
-
-
-            html +=        `<td>${formatTimeStamp(activity.timestamp)}</td>
+            html += `<td>${formatTimeStamp(activity.timestamp)}</td>
                          </tr>`;
         });
 
@@ -449,7 +433,7 @@ adminQuestionsAjax = () => {
                                 <th>Delete</th>
                             </tr>`;
 
-        questions.forEach(function(question) {
+        questions.forEach(function (question) {
 
             html += `<tr>
                             <td>${question.id}</td>
@@ -468,16 +452,15 @@ adminQuestionsAjax = () => {
 }
 
 
-
 PreHTMLGeneration = () => {
     console.log("Generating Pre HTML")
 }
 
 generatePreviewModal = () => {
 
-    $(document).on('change', '#question', function() {
+    $(document).on('change', '#question', function () {
         let question = $(this).val()
-        if($('#questionFormatType').is(":checked")){
+        if ($('#questionFormatType').is(":checked")) {
             question = generatePreHTML(question);
             question = `${question}`;
         }
@@ -485,9 +468,9 @@ generatePreviewModal = () => {
 
     });
 
-    $(document).on('click', '#questionFormatType', function() {
+    $(document).on('click', '#questionFormatType', function () {
         let question = $('#question').val()
-        if($('#questionFormatType').is(":checked")){
+        if ($('#questionFormatType').is(":checked")) {
             question = generatePreHTML(question);
             question = `${question}`
         }
@@ -495,18 +478,18 @@ generatePreviewModal = () => {
 
     });
 
-    $(document).on('change', '#solution', function() {
+    $(document).on('change', '#solution', function () {
         let solution = $(this).val()
-        if($('#solutionFormatType').is(":checked")){
+        if ($('#solutionFormatType').is(":checked")) {
             solution = generatePreHTML(solution);
             solution = `${solution}`
         }
         $('#solutionFormatted').val(solution)
     });
 
-    $(document).on('click', '#solutionFormatType', function() {
+    $(document).on('click', '#solutionFormatType', function () {
         let solution = $('#solution').val()
-        if($('#solutionFormatType').is(":checked")){
+        if ($('#solutionFormatType').is(":checked")) {
             solution = generatePreHTML(solution);
             solution = `${solution}`
         }
@@ -516,18 +499,17 @@ generatePreviewModal = () => {
 
     PreviewModal();
 
-    console.log("Generating Preview Modal")
-    $(document).on('click','#previewmodal', function () {
+    $(document).on('click', '#previewmodal', function () {
         PreviewModal();
     });
 
-    $(document).on('change','#solution_video_url',function () {
+    $(document).on('change', '#solution_video_url', function () {
         $('#solution_video').val(GetYoutubeVideoID);
     })
 }
 
 GetYoutubeVideoID = () => {
-    let youtubeURL = $('#solution_video_url').val().replace("?v=","?fakeparam=100&video=");
+    let youtubeURL = $('#solution_video_url').val().replace("?v=", "?fakeparam=100&video=");
     let urlParam = new URLSearchParams(youtubeURL);
     let videoID = urlParam.get('video');
     return videoID;
@@ -577,8 +559,8 @@ getQuestionAJAX = () => {
     let QuestionID = getQuestionID();
     let questionJSONURL = `/question/${QuestionID}.json`;
 
-    (function($) {
-        let request = $.ajax({url : questionJSONURL});
+    (function ($) {
+        let request = $.ajax({url: questionJSONURL});
         request.done(function (questions) {
             let currentQuestion = questions[0];
             $('#question_id').val(currentQuestion.id);
@@ -587,13 +569,13 @@ getQuestionAJAX = () => {
             $('#level').val(currentQuestion.level);
             $('#question').val(generateHTML(currentQuestion.question));
             $('#questionFormatted').val(currentQuestion.question);
-            if ($('#questionFormatted').val().includes("<code>")){
-                $('#questionFormatType').prop('checked',true);
+            if ($('#questionFormatted').val().includes("<code>")) {
+                $('#questionFormatType').prop('checked', true);
             }
             $('#solution').val(generateHTML(currentQuestion.solution));
             $('#solutionFormatted').val(currentQuestion.solution);
-            if ($('#solutionFormatted').val().includes("<code>")){
-                $('#solutionFormatType').prop('checked',true);
+            if ($('#solutionFormatted').val().includes("<code>")) {
+                $('#solutionFormatType').prop('checked', true);
             }
             $('#resource').val(currentQuestion.resource);
             $('#solution_video_url').val("https://www.youtube.com/watch?v=" + currentQuestion.video_url);

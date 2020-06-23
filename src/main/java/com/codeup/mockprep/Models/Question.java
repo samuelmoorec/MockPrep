@@ -1,5 +1,7 @@
 package com.codeup.mockprep.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,6 +11,10 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
+    @JsonBackReference
+    private List<Rating> ratings;
 
     @Column
     private String title;

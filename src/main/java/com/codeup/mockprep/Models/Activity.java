@@ -4,8 +4,6 @@ package com.codeup.mockprep.Models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 @Entity
@@ -33,7 +31,6 @@ public class Activity {
     @Column
     private Timestamp timestamp;
 
-//    hello
 
     public Activity(){}
 
