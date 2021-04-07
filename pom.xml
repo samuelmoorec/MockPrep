@@ -15,9 +15,8 @@
     <description>A application for getting Students ready for Mock Interviews</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>13</java.version>
         <skipTests>true</skipTests>
-
     </properties>
 
     <dependencies>
